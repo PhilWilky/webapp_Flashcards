@@ -15,7 +15,7 @@ let viewedCards = new Set();
 // Configuration
 const CONFIG = {
     // Replace this URL with the actual location of your JSON file
-    jsonUrl: '/flashcards.json',
+    jsonUrl: 'flashcards.json',
     autoPlayInterval: 3000, // Time in ms for auto-play transitions
     cacheExpiry: 24 * 60 * 60 * 1000, // Cache expiry time (24 hours)
     localStorageKeys: {
