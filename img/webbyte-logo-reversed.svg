@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120">
+  <!-- Hexagonal icon in white -->
+  <polygon points="30,60 60,30 120,30 150,60 120,90 60,90" fill="white"/>
+  
+  <!-- Binary code text -->
+  <text x="75" y="50" font-family="Courier New" font-size="14" fill="#333333">1010</text>
+  <text x="75" y="70" font-family="Courier New" font-size="14" fill="#333333">0101</text>
+  
+  <!-- WebByte text -->
+  <text x="170" y="75" font-family="Montserrat" font-weight="700" font-size="50">
+    <tspan fill="white">Web</tspan><tspan fill="white">Byte</tspan>
+  </text>
+</svg>

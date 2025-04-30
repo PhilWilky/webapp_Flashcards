@@ -1,0 +1,278 @@
+/* Main Styles for Bit, Nibble and Byte Flashcards App */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+
+.company-logo {
+    display: flex;
+    align-items: center;
+}
+
+.company-logo h1 {
+    color: #2c3e50;
+    font-size: 24px;
+    margin-left: 10px;
+}
+
+.logo-symbol {
+    font-size: 28px;
+    color: #3498db;
+    font-weight: bold;
+}
+
+.category-display {
+    background-color: #3498db;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    display: inline-block;
+    font-size: 14px;
+}
+
+/* Filter Controls */
+.filters {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+}
+
+.filter-label {
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+#category-filter {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    min-width: 200px;
+}
+
+#search-input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    flex-grow: 1;
+    min-width: 150px;
+}
+
+/* Card Styles */
+.card-container {
+    perspective: 1000px;
+    height: 300px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    cursor: pointer;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    text-align: center;
+    overflow-y: auto;
+}
+
+.card-front {
+    background-color: #ffffff;
+    border-left: 5px solid #3498db;
+}
+
+.card-back {
+    background-color: #2c3e50;
+    color: white;
+    transform: rotateY(180deg);
+    border-left: 5px solid #e74c3c;
+}
+
+.question {
+    font-size: 24px;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.answer {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.hint {
+    position: absolute;
+    bottom: 10px;
+    font-size: 12px;
+    color: #95a5a6;
+    font-style: italic;
+}
+
+/* Control Buttons */
+.controls {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+}
+
+.play-btn {
+    background-color: #27ae60;
+}
+
+.play-btn:hover {
+    background-color: #219653;
+}
+
+.play-btn.paused {
+    background-color: #e74c3c;
+}
+
+.play-btn.paused:hover {
+    background-color: #c0392b;
+}
+
+/* Statistics and Counter */
+.counter {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #7f8c8d;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3498db;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+/* Footer and Loading */
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #95a5a6;
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+    color: #7f8c8d;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .counter {
+        margin-top: 10px;
+    }
+    
+    .card-container {
+        height: 350px;
+    }
+    
+    .question, .answer {
+        font-size: 18px;
+    }
+    
+    .stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+}

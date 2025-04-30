@@ -1,0 +1,902 @@
+[
+  {
+    "id": 1,
+    "category": "Cloud Concepts",
+    "question": "What is the definition of cloud computing?",
+    "answer": "The delivery of computing services over the internet to offer faster innovation, flexible resources, and economies of scale."
+  },
+  {
+    "id": 2,
+    "category": "Cloud Concepts",
+    "question": "What are the main deployment models for cloud computing?",
+    "answer": "Public cloud, private cloud, hybrid cloud, and multi-cloud."
+  },
+  {
+    "id": 3,
+    "category": "Cloud Concepts",
+    "question": "What is the 'pay-as-you-go' pricing model?",
+    "answer": "A consumption-based pricing model where customers only pay for the cloud services they use."
+  },
+  {
+    "id": 4,
+    "category": "Cloud Concepts",
+    "question": "What are the key characteristics of cloud computing?",
+    "answer": "High availability, scalability, elasticity, agility, fault tolerance, and disaster recovery."
+  },
+  {
+    "id": 5,
+    "category": "Cloud Concepts",
+    "question": "What is the difference between OpEx and CapEx?",
+    "answer": "CapEx (Capital Expenditure) is the upfront spending on physical infrastructure, while OpEx (Operational Expenditure) is the ongoing spending on services or products over time."
+  },
+  {
+    "id": 6,
+    "category": "Cloud Concepts",
+    "question": "What are the three main service models of cloud computing?",
+    "answer": "Infrastructure as a Service (IaaS), Platform as a Service (PaaS), and Software as a Service (SaaS)."
+  },
+  {
+    "id": 7,
+    "category": "Cloud Concepts",
+    "question": "What is elasticity in cloud computing?",
+    "answer": "The ability to quickly expand or decrease compute resources based on demand."
+  },
+  {
+    "id": 8,
+    "category": "Cloud Concepts",
+    "question": "What is high availability in cloud computing?",
+    "answer": "The ability of a system to remain operational for extended periods of time with minimal downtime."
+  },
+  {
+    "id": 9,
+    "category": "Cloud Concepts",
+    "question": "What is a private cloud?",
+    "answer": "Cloud computing resources used exclusively by a single business or organization, physically located on the company's on-site datacenter or hosted by a third-party service provider."
+  },
+  {
+    "id": 10,
+    "category": "Cloud Concepts",
+    "question": "What is a hybrid cloud?",
+    "answer": "A computing environment that combines a public cloud and a private cloud by allowing data and applications to be shared between them."
+  },
+  {
+    "id": 11,
+    "category": "Cloud Concepts",
+    "question": "What is a public cloud?",
+    "answer": "Computing services offered by third-party providers over the public internet, making them available to anyone who wants to use or purchase them."
+  },
+  {
+    "id": 12,
+    "category": "Cloud Concepts",
+    "question": "What is a multi-cloud strategy?",
+    "answer": "The use of multiple cloud computing services from different providers in a single heterogeneous architecture."
+  },
+  {
+    "id": 13,
+    "category": "Cloud Concepts",
+    "question": "What is vertical scaling?",
+    "answer": "Adding more resources (like CPU or RAM) to a single node or server to increase its capacity, also known as 'scaling up'."
+  },
+  {
+    "id": 14,
+    "category": "Cloud Concepts",
+    "question": "What is horizontal scaling?",
+    "answer": "Adding more nodes or servers to a system to distribute the load, also known as 'scaling out'."
+  },
+  {
+    "id": 15,
+    "category": "Cloud Concepts",
+    "question": "What is agility in cloud computing?",
+    "answer": "The ability to rapidly develop, test, and launch software applications that drive business growth."
+  },
+  {
+    "id": 16,
+    "category": "Cloud Concepts",
+    "question": "What are the primary benefits of cloud computing?",
+    "answer": "Cost efficiency, global scale, performance, reliability, security, and speed."
+  },
+  {
+    "id": 17,
+    "category": "Cloud Concepts",
+    "question": "What is cloud governance?",
+    "answer": "The set of rules, policies, and procedures that define how an organization operates in the cloud."
+  },
+  {
+    "id": 18,
+    "category": "Cloud Concepts",
+    "question": "What is serverless computing?",
+    "answer": "A cloud computing execution model where the cloud provider runs the server and dynamically manages the allocation of machine resources."
+  },
+  {
+    "id": 19,
+    "category": "Cloud Concepts",
+    "question": "What is a cloud service provider (CSP)?",
+    "answer": "A company that offers cloud computing services, infrastructure, platforms, or software to other businesses or individuals."
+  },
+  {
+    "id": 20,
+    "category": "Cloud Concepts",
+    "question": "What is fault tolerance in cloud computing?",
+    "answer": "The ability of a system to continue operating properly in the event of the failure of one or more of its components."
+  },
+  {
+    "id": 21,
+    "category": "Cloud Concepts",
+    "question": "What is the difference between IaaS, PaaS, and SaaS?",
+    "answer": "IaaS provides virtualized computing resources, PaaS provides a platform for developing applications without managing infrastructure, and SaaS delivers software applications over the internet on a subscription basis."
+  },
+  {
+    "id": 22,
+    "category": "Cloud Concepts",
+    "question": "What is cloud-native architecture?",
+    "answer": "An approach to designing and building applications that exploits the characteristics of the cloud computing delivery model, focusing on scalability, resilience, and automation."
+  },
+  {
+    "id": 23,
+    "category": "Azure Services",
+    "question": "What is Azure Virtual Machine?",
+    "answer": "An on-demand, scalable computing resource that gives you the flexibility of virtualization without having to buy and maintain physical hardware."
+  },
+  {
+    "id": 24,
+    "category": "Azure Services",
+    "question": "What is Azure App Service?",
+    "answer": "A PaaS offering that allows you to build and host web apps, mobile back ends, and RESTful APIs without managing infrastructure."
+  },
+  {
+    "id": 25,
+    "category": "Azure Services",
+    "question": "What is Azure Cosmos DB?",
+    "answer": "A globally distributed, multi-model database service for operational and analytics workloads."
+  },
+  {
+    "id": 26,
+    "category": "Azure Services",
+    "question": "What is Azure Blob Storage?",
+    "answer": "Azure's object storage solution optimized for storing massive amounts of unstructured data, such as text or binary data."
+  },
+  {
+    "id": 27,
+    "category": "Azure Services",
+    "question": "What is Azure SQL Database?",
+    "answer": "A fully managed relational database with auto-scale, integral intelligence, and robust security."
+  },
+  {
+    "id": 28,
+    "category": "Azure Services",
+    "question": "What is Azure Functions?",
+    "answer": "A serverless compute service that enables you to run code on-demand without having to explicitly provision or manage infrastructure."
+  },
+  {
+    "id": 29,
+    "category": "Azure Services",
+    "question": "What is Azure Virtual Network?",
+    "answer": "The fundamental building block for your private network in Azure that enables Azure resources to securely communicate with each other, the internet, and on-premises networks."
+  },
+  {
+    "id": 30,
+    "category": "Azure Services",
+    "question": "What is Azure Load Balancer?",
+    "answer": "A service that distributes incoming network traffic across multiple servers to ensure no single server becomes overwhelmed."
+  },
+  {
+    "id": 31,
+    "category": "Azure Services",
+    "question": "What is Azure Content Delivery Network (CDN)?",
+    "answer": "A distributed network of servers that can efficiently deliver web content to users by caching content at strategically placed physical nodes."
+  },
+  {
+    "id": 32,
+    "category": "Azure Services",
+    "question": "What is Azure Monitor?",
+    "answer": "A comprehensive solution for collecting, analyzing, and acting on telemetry from your cloud and on-premises environments."
+  },
+  {
+    "id": 33,
+    "category": "Azure Services",
+    "question": "What is Azure Container Instances?",
+    "answer": "A service that offers the fastest and simplest way to run a container in Azure without having to manage any virtual machines or adopt a higher-level service."
+  },
+  {
+    "id": 34,
+    "category": "Azure Services",
+    "question": "What is Azure Kubernetes Service (AKS)?",
+    "answer": "A managed container orchestration service that simplifies the deployment, management, and operations of Kubernetes."
+  },
+  {
+    "id": 35,
+    "category": "Azure Services",
+    "question": "What is Azure Logic Apps?",
+    "answer": "A cloud service that helps you automate and orchestrate tasks, business processes, and workflows when you need to integrate apps, data, systems, and services."
+  },
+  {
+    "id": 36,
+    "category": "Azure Services",
+    "question": "What is Azure Files?",
+    "answer": "A fully managed file share service in the cloud that is accessible via the industry standard Server Message Block (SMB) protocol."
+  },
+  {
+    "id": 37,
+    "category": "Azure Services",
+    "question": "What is Azure Event Grid?",
+    "answer": "A fully-managed event routing service that uses a publish-subscribe model for event handling."
+  },
+  {
+    "id": 38,
+    "category": "Azure Services",
+    "question": "What is Azure Service Bus?",
+    "answer": "A fully managed enterprise integration message broker that enables reliable and secure transfer of messages between applications and services."
+  },
+  {
+    "id": 39,
+    "category": "Azure Services",
+    "question": "What is Azure IoT Hub?",
+    "answer": "A managed service hosted in the cloud that acts as a central message hub for bi-directional communication between IoT applications and the devices they manage."
+  },
+  {
+    "id": 40,
+    "category": "Azure Services",
+    "question": "What is Azure Synapse Analytics?",
+    "answer": "An analytics service that brings together enterprise data warehousing and big data analytics into a single integrated platform."
+  },
+  {
+    "id": 41,
+    "category": "Azure Services",
+    "question": "What is Azure API Management?",
+    "answer": "A service that helps organizations publish APIs to external, partner, and internal developers to unlock the potential of their data and services."
+  },
+  {
+    "id": 42,
+    "category": "Azure Services",
+    "question": "What is Azure Cognitive Services?",
+    "answer": "A suite of services and APIs that enable developers to embed cognitive capabilities such as vision, speech, language, and decision-making into applications."
+  },
+  {
+    "id": 43,
+    "category": "Azure Services",
+    "question": "What is Azure Static Web Apps?",
+    "answer": "A service that automatically builds and deploys full stack web apps to Azure from a code repository."
+  },
+  {
+    "id": 44,
+    "category": "Azure Services",
+    "question": "What is Azure Cache for Redis?",
+    "answer": "A fully managed, open source-compatible in-memory data store to power fast, scalable applications."
+  },
+  {
+    "id": 45,
+    "category": "Azure Architecture",
+    "question": "What is an Azure region?",
+    "answer": "A set of datacenters deployed within a latency-defined perimeter and connected through a dedicated regional low-latency network."
+  },
+  {
+    "id": 46,
+    "category": "Azure Architecture",
+    "question": "What is an Azure availability zone?",
+    "answer": "Physically separate locations within an Azure region equipped with independent power, cooling, and networking."
+  },
+  {
+    "id": 47,
+    "category": "Azure Architecture",
+    "question": "What is a resource group in Azure?",
+    "answer": "A container that holds related resources for an Azure solution, grouping resources that share the same lifecycle, permissions, and policies."
+  },
+  {
+    "id": 48,
+    "category": "Azure Architecture",
+    "question": "What is Azure Resource Manager (ARM)?",
+    "answer": "The deployment and management service for Azure that provides a management layer enabling you to create, update, and delete resources."
+  },
+  {
+    "id": 49,
+    "category": "Azure Architecture",
+    "question": "What are Azure management groups?",
+    "answer": "Containers that help you manage access, policy, and compliance across multiple subscriptions."
+  },
+  {
+    "id": 50,
+    "category": "Azure Architecture",
+    "question": "What is an Azure subscription?",
+    "answer": "A logical container used to provision resources in Azure that is linked to an Azure account."
+  },
+  {
+    "id": 51,
+    "category": "Azure Architecture",
+    "question": "What are Azure paired regions?",
+    "answer": "Azure regions paired together within the same geographic area to provide regional resiliency for business continuity and disaster recovery."
+  },
+  {
+    "id": 52,
+    "category": "Azure Architecture",
+    "question": "What is an Azure resource?",
+    "answer": "A manageable item that is available through Azure, such as virtual machines, storage accounts, web apps, databases, and virtual networks."
+  },
+  {
+    "id": 53,
+    "category": "Azure Architecture",
+    "question": "What is the Azure portal?",
+    "answer": "A web-based, unified console that provides an alternative to command-line tools for managing your Azure resources."
+  },
+  {
+    "id": 54,
+    "category": "Azure Architecture",
+    "question": "What is Azure Marketplace?",
+    "answer": "An online store that offers applications and services either built on or designed to integrate with Azure."
+  },
+  {
+    "id": 55,
+    "category": "Azure Architecture",
+    "question": "What is Azure Data Lake Storage?",
+    "answer": "A highly scalable and cost-effective data lake solution for big data analytics built on Azure Blob Storage."
+  },
+  {
+    "id": 56,
+    "category": "Azure Architecture",
+    "question": "What is an Azure landing zone?",
+    "answer": "A pre-configured environment that sets up governance, security, and infrastructure components to enable effective Azure adoption at scale."
+  },
+  {
+    "id": 57,
+    "category": "Azure Architecture",
+    "question": "What is the difference between Azure availability sets and availability zones?",
+    "answer": "Availability sets protect against failures within a datacenter, while availability zones protect against entire datacenter failures by providing physically separate locations within a region."
+  },
+  {
+    "id": 58,
+    "category": "Azure Architecture",
+    "question": "What is an Azure resource lock?",
+    "answer": "A setting that can be applied to any resource to block modification or deletion, helping prevent accidental changes to critical resources."
+  },
+  {
+    "id": 59,
+    "category": "Azure Architecture",
+    "question": "What is Azure Resource Graph?",
+    "answer": "A service that provides the ability to query and explore your Azure resources at scale."
+  },
+  {
+    "id": 60,
+    "category": "Azure Architecture",
+    "question": "What is the Azure Well-Architected Framework?",
+    "answer": "A set of guiding tenets that can be used to improve the quality of a workload. The framework consists of five pillars: cost optimization, operational excellence, performance efficiency, reliability, and security."
+  },
+  {
+    "id": 61,
+    "category": "Azure Architecture",
+    "question": "What is Azure Stack?",
+    "answer": "A portfolio of products that extend Azure services and capabilities to your environment of choice—from the datacenter to edge locations and remote offices."
+  },
+  {
+    "id": 62,
+    "category": "Azure Architecture",
+    "question": "What is the difference between a subscription and a tenant in Azure?",
+    "answer": "A tenant represents the organization and is a dedicated instance of Azure AD. A subscription is a logical unit of Azure services linked to a tenant that is responsible for billing."
+  },
+  {
+    "id": 63,
+    "category": "Azure Architecture",
+    "question": "What is the Azure hierarchy of organization?",
+    "answer": "The organizational structure from top to bottom: Management Groups > Subscriptions > Resource Groups > Resources."
+  },
+  {
+    "id": 64,
+    "category": "Azure Architecture",
+    "question": "What is an ARM template?",
+    "answer": "A JavaScript Object Notation (JSON) file that defines the infrastructure and configuration for your project, enabling infrastructure as code for Azure resources."
+  },
+  {
+    "id": 65,
+    "category": "Azure Architecture",
+    "question": "What is Azure Bicep?",
+    "answer": "A domain-specific language (DSL) that uses declarative syntax to deploy Azure resources, providing a more concise and readable alternative to ARM templates."
+  },
+  {
+    "id": 66,
+    "category": "Azure Architecture",
+    "question": "What is Azure Lighthouse?",
+    "answer": "A service that provides service providers with a single control plane to view and manage Azure across all their customers with higher automation, scale, and enhanced governance."
+  },
+  {
+    "id": 67,
+    "category": "Azure Security",
+    "question": "What is Microsoft Entra ID (formerly Azure AD)?",
+    "answer": "The new name for Azure Active Directory, Microsoft's cloud identity service that provides single sign-on, multifactor authentication, and conditional access to guard against cybersecurity attacks."
+  },
+  {
+    "id": 68,
+    "category": "Azure Security",
+    "question": "What is Azure Multi-Factor Authentication?",
+    "answer": "A security feature that requires users to provide two or more verification methods to access their account or resources."
+  },
+  {
+    "id": 69,
+    "category": "Azure Security",
+    "question": "What is Microsoft Defender for Cloud?",
+    "answer": "A unified infrastructure security management system that strengthens the security posture of your data centers and provides advanced threat protection across your hybrid workloads (formerly Azure Security Center)."
+  },
+  {
+    "id": 70,
+    "category": "Azure Security",
+    "question": "What is Azure Key Vault?",
+    "answer": "A cloud service for securely storing and accessing secrets such as API keys, passwords, certificates, and cryptographic keys."
+  },
+  {
+    "id": 71,
+    "category": "Azure Security",
+    "question": "What is a network security group (NSG) in Azure?",
+    "answer": "A security feature that filters network traffic to and from Azure resources in an Azure virtual network."
+  },
+  {
+    "id": 72,
+    "category": "Azure Security",
+    "question": "What is the shared responsibility model in cloud computing?",
+    "answer": "A security model that defines which security tasks are handled by the cloud provider and which are handled by the customer, with responsibilities varying by service model (IaaS, PaaS, SaaS)."
+  },
+  {
+    "id": 73,
+    "category": "Azure Security",
+    "question": "What is Azure Firewall?",
+    "answer": "A managed, cloud-based network security service that protects your Azure Virtual Network resources."
+  },
+  {
+    "id": 74,
+    "category": "Azure Security",
+    "question": "What is role-based access control (RBAC) in Azure?",
+    "answer": "An authorization system built on Azure Resource Manager that provides fine-grained access management of Azure resources."
+  },
+  {
+    "id": 75,
+    "category": "Azure Security",
+    "question": "What is Azure Information Protection?",
+    "answer": "A cloud-based solution that helps organizations classify and protect documents and emails by applying labels."
+  },
+  {
+    "id": 76,
+    "category": "Azure Security",
+    "question": "What is Azure DDoS Protection?",
+    "answer": "A service that provides protection from Distributed Denial of Service attacks on Azure resources."
+  },
+  {
+    "id": 77,
+    "category": "Azure Security",
+    "question": "What is Azure Security Benchmark?",
+    "answer": "A set of guidelines and best practices for securing Azure environments based on common compliance frameworks."
+  },
+  {
+    "id": 78,
+    "category": "Azure Security",
+    "question": "What is Azure Bastion?",
+    "answer": "A fully managed PaaS service that provides secure and seamless RDP and SSH access to your virtual machines directly through the Azure Portal."
+  },
+  {
+    "id": 79,
+    "category": "Azure Security",
+    "question": "What is Azure Private Link?",
+    "answer": "A service that provides private connectivity from a virtual network to Azure platform as a service (PaaS), customer-owned, or Microsoft partner services."
+  },
+  {
+    "id": 80,
+    "category": "Azure Security",
+    "question": "What is an Azure Private Endpoint?",
+    "answer": "A network interface that connects you privately and securely to a service powered by Azure Private Link."
+  },
+  {
+    "id": 81,
+    "category": "Azure Security",
+    "question": "What is Microsoft Sentinel?",
+    "answer": "A cloud-native security information and event management (SIEM) and security orchestration automated response (SOAR) solution."
+  },
+  {
+    "id": 82,
+    "category": "Azure Security",
+    "question": "What is Azure Confidential Computing?",
+    "answer": "A service that enables you to isolate your sensitive data while it's being processed in the cloud."
+  },
+  {
+    "id": 83,
+    "category": "Azure Security",
+    "question": "What is the principle of least privilege in Azure?",
+    "answer": "A security concept in which a user is given the minimum levels of access – or permissions – needed to perform their job functions."
+  },
+  {
+    "id": 84,
+    "category": "Azure Security",
+    "question": "What are conditional access policies in Microsoft Entra ID?",
+    "answer": "Rules that allow or deny access to resources based on identity signals such as who the user is, where they are, and what device they are using."
+  },
+  {
+    "id": 85,
+    "category": "Azure Security",
+    "question": "What is Microsoft Entra ID Privileged Identity Management (PIM)?",
+    "answer": "A service that enables just-in-time privileged access to Azure and other Microsoft resources, providing time-based and approval-based role activation."
+  },
+  {
+    "id": 86,
+    "category": "Azure Security",
+    "question": "What is Azure AD B2C?",
+    "answer": "An identity management service that enables custom control of how customers sign up, sign in, and manage their profiles when using applications."
+  },
+  {
+    "id": 87,
+    "category": "Azure Security",
+    "question": "What is Azure Application Gateway?",
+    "answer": "A web traffic load balancer that includes a Web Application Firewall (WAF) to provide protection from common web-based attacks."
+  },
+  {
+    "id": 88,
+    "category": "Azure Pricing",
+    "question": "What factors affect Azure costs?",
+    "answer": "Resource type, consumption-based pricing, subscription type, Azure Marketplace, location (region), zones, and traffic."
+  },
+  {
+    "id": 89,
+    "category": "Azure Pricing",
+    "question": "What is the Azure Price Calculator?",
+    "answer": "A tool provided by Microsoft to estimate the cost of Azure products and services based on your specific requirements."
+  },
+  {
+    "id": 90,
+    "category": "Azure Pricing",
+    "question": "What is the Azure Total Cost of Ownership (TCO) Calculator?",
+    "answer": "A tool that helps estimate the cost savings of operating your solution on Azure versus in your on-premises datacenter."
+  },
+  {
+    "id": 91,
+    "category": "Azure Pricing",
+    "question": "What is Azure Cost Management?",
+    "answer": "A suite of tools that help track and manage your Azure spending, set budgets, and optimize resource use."
+  },
+  {
+    "id": 92,
+    "category": "Azure Pricing",
+    "question": "What is a spending limit in Azure?",
+    "answer": "A feature that prevents spending over your credit amount for subscription types with credits."
+  },
+  {
+    "id": 93,
+    "category": "Azure Pricing",
+    "question": "What is an Azure Free Account?",
+    "answer": "A starter account that includes a monetary credit to spend on any Azure service for 30 days, plus free access to popular Azure products for 12 months and access to more than 25 products that are always free."
+  },
+  {
+    "id": 94,
+    "category": "Azure Pricing",
+    "question": "What is an Azure reservation?",
+    "answer": "A way to save money by pre-paying for one-year or three-year terms for virtual machines, SQL Database compute capacity, Azure Cosmos DB throughput, or other Azure resources."
+  },
+  {
+    "id": 95,
+    "category": "Azure Pricing",
+    "question": "What are Azure spot instances?",
+    "answer": "Azure VMs that use spare Azure compute capacity at significant cost savings, but may be evicted based on capacity needs."
+  },
+  {
+    "id": 96,
+    "category": "Azure Pricing",
+    "question": "What is the Azure Service Level Agreement (SLA)?",
+    "answer": "A formal agreement between Microsoft and customers that defines the performance standards for Azure services, including uptime guarantees."
+  },
+  {
+    "id": 97,
+    "category": "Azure Pricing",
+    "question": "What is Azure Advisor?",
+    "answer": "A free service that provides recommendations to help improve the cost, performance, reliability, and security of your Azure resources."
+  },
+  {
+    "id": 98,
+    "category": "Azure Pricing",
+    "question": "What is the Azure Free Tier?",
+    "answer": "A collection of Azure products that are always free within certain usage limits, regardless of whether you have an Azure Free Account or a paid subscription."
+  },
+  {
+    "id": 99,
+    "category": "Azure Pricing",
+    "question": "What is Azure Hybrid Benefit?",
+    "answer": "A licensing benefit that helps you significantly reduce the costs of running your workloads in the cloud by letting you use your on-premises Windows Server and SQL Server licenses with Software Assurance on Azure."
+  },
+  {
+    "id": 100,
+    "category": "Azure Pricing",
+    "question": "What is Azure Dev/Test pricing?",
+    "answer": "Special pricing for development and testing environments, offering discounted rates for Azure services when used for non-production workloads."
+  },
+  {
+    "id": 101,
+    "category": "Azure Pricing",
+    "question": "What is an Azure subscription offer type?",
+    "answer": "The type of Azure subscription you have, such as Free Trial, Pay-As-You-Go, Enterprise Agreement, or CSP, which affects pricing and available services."
+  },
+  {
+    "id": 102,
+    "category": "Azure Pricing",
+    "question": "What is an Azure Enterprise Agreement?",
+    "answer": "A licensing agreement for organizations committing to a three-year contract with Microsoft, offering benefits like flexible billing options and discounted pricing."
+  },
+  {
+    "id": 103,
+    "category": "Azure Pricing",
+    "question": "What is Azure Cost Analysis?",
+    "answer": "A feature of Azure Cost Management that provides interactive visualizations for exploring and analyzing your Azure costs."
+  },
+  {
+    "id": 104,
+    "category": "Azure Pricing",
+    "question": "What are Azure budgets?",
+    "answer": "A feature that lets you set a spending limit for Azure services, with the ability to configure alerts when costs approach or exceed the defined amount."
+  },
+  {
+    "id": 105,
+    "category": "Azure Pricing",
+    "question": "What is Azure Cost Optimization?",
+    "answer": "The practice of managing and reducing overall Azure spend by identifying mismanaged resources, eliminating waste, reserving capacity for higher discounts, and right-sizing computing services."
+  },
+  {
+    "id": 106,
+    "category": "Azure Pricing",
+    "question": "What is Azure Savings Plan?",
+    "answer": "A flexible pricing option that provides savings off pay-as-you-go pricing in exchange for a commitment to use a specific amount of compute resources for a one or three year term."
+  },
+  {
+    "id": 107,
+    "category": "Azure Pricing",
+    "question": "What are the different ways to reduce costs in Azure?",
+    "answer": "Using Azure Advisor cost recommendations, right-sizing underutilized resources, utilizing reserved instances, implementing auto-shutdown for development resources, using Azure Hybrid Benefit, and monitoring with Azure Cost Management."
+  },
+  {
+    "id": 108,
+    "category": "Azure Management",
+    "question": "What is Azure PowerShell?",
+    "answer": "A module that provides cmdlets to manage Azure resources directly from the PowerShell command line."
+  },
+  {
+    "id": 109,
+    "category": "Azure Management",
+    "question": "What is Azure CLI?",
+    "answer": "A command-line tool designed to make scripting Azure tasks easier and more efficient through Bash commands."
+  },
+  {
+    "id": 110,
+    "category": "Azure Management",
+    "question": "What is Azure Cloud Shell?",
+    "answer": "An interactive, authenticated, browser-accessible shell for managing Azure resources without installing any tools on your local machine."
+  },
+  {
+    "id": 111,
+    "category": "Azure Management",
+    "question": "What is Azure Policy?",
+    "answer": "A service in Azure that creates, assigns, and manages policies to enforce different rules and effects over your resources to ensure they comply with corporate standards and service level agreements."
+  },
+  {
+    "id": 112,
+    "category": "Azure Management",
+    "question": "What are Azure Blueprints?",
+    "answer": "A declarative way to orchestrate the deployment of various resource templates and other artifacts such as role assignments, policy assignments, and Azure Resource Manager templates."
+  },
+  {
+    "id": 113,
+    "category": "Azure Management",
+    "question": "What is the purpose of resource tags in Azure?",
+    "answer": "Tags help you organize Azure resources logically for billing, access control, automation, and management purposes by attaching metadata to resources."
+  },
+  {
+    "id": 114,
+    "category": "Azure Management",
+    "question": "What is Azure Arc?",
+    "answer": "A set of technologies that extends Azure Resource Manager capabilities to Linux and Windows servers, as well as Kubernetes clusters on any infrastructure across on-premises, multi-cloud, and edge."
+  },
+  {
+    "id": 115,
+    "category": "Azure Management",
+    "question": "What is Azure Automation?",
+    "answer": "A cloud-based automation and configuration service that supports consistent management across your Azure and non-Azure environments."
+  },
+  {
+    "id": 116,
+    "category": "Azure Management",
+    "question": "What is Azure Service Health?",
+    "answer": "A service that provides personalized guidance and support when issues in Azure services affect you, helping you stay informed about service problems, planned maintenance, and health advisories."
+  },
+  {
+    "id": 117,
+    "category": "Azure Management",
+    "question": "What is Azure Resource Health?",
+    "answer": "A service that provides information about the current and historical health status of Azure resources, helping diagnose and get support for service problems."
+  },
+  {
+    "id": 118,
+    "category": "Azure Management",
+    "question": "What is Azure Resource Graph Explorer?",
+    "answer": "A tool in the Azure portal that provides a query interface to explore Azure resources using the Kusto Query Language (KQL)."
+  },
+  {
+    "id": 119,
+    "category": "Azure Management",
+    "question": "What are Azure management groups used for?",
+    "answer": "To organize subscriptions into hierarchies for unified policy and access management, enabling governance across multiple subscriptions at scale."
+  },
+  {
+    "id": 120,
+    "category": "Azure Management",
+    "question": "What is Azure Activity Log?",
+    "answer": "A service that provides insight into subscription-level events in Azure, showing who did what, when, and where."
+  },
+  {
+    "id": 121,
+    "category": "Azure Management",
+    "question": "What is Azure Logic Apps used for in management contexts?",
+    "answer": "To automate workflows and integrate with various Azure services, streamlining operational tasks and management processes."
+  },
+  {
+    "id": 122,
+    "category": "Azure Management",
+    "question": "What is Azure Advisor Score?",
+    "answer": "A measurement that helps you understand how well your Azure resources are following best practices, represented as a percentage."
+  },
+  {
+    "id": 123,
+    "category": "Azure Management",
+    "question": "What is Azure Diagnostics?",
+    "answer": "A capability that enables the collection of diagnostic data from a running application or virtual machine for monitoring, troubleshooting, and performance analysis."
+  },
+  {
+    "id": 124,
+    "category": "Azure Management",
+    "question": "What is Azure Purview?",
+    "answer": "A unified data governance service that helps manage and govern on-premises, multi-cloud, and SaaS data."
+  },
+  {
+    "id": 125,
+    "category": "Azure Management",
+    "question": "What is the Azure portal Quickstart Center?",
+    "answer": "A specialized area in the Azure portal that provides guided experiences for common tasks like creating resources and monitoring your environment."
+  },
+  {
+    "id": 126,
+    "category": "Azure Management",
+    "question": "What is Infrastructure as Code (IaC) in Azure?",
+    "answer": "The practice of managing and provisioning infrastructure through code instead of manual processes, typically using tools like ARM templates, Terraform, or Azure Bicep."
+  },
+  {
+    "id": 127,
+    "category": "Azure Management",
+    "question": "What is Azure Advisor's connection to cost management?",
+    "answer": "Azure Advisor provides cost optimization recommendations that help identify unused or underutilized resources, suggest reserved instances, and highlight opportunities to reduce Azure spending."
+  },
+  {
+    "id": 128,
+    "category": "Azure Management",
+    "question": "What specific features does Azure Arc provide for hybrid environments?",
+    "answer": "Azure Arc enables deploying Azure services anywhere, managing Kubernetes clusters at scale, implementing Azure security policies across environments, and using familiar Azure tools to manage both Azure and non-Azure resources."
+  },
+  {
+    "id": 129,
+    "category": "Azure Management",
+    "question": "What is Azure Batch?",
+    "answer": "A service that enables large-scale parallel and high-performance computing (HPC) batch jobs with the ability to scale to tens, hundreds, or thousands of VMs."
+  },
+  {
+    "id": 130,
+    "category": "Compliance and Trust",
+    "question": "What is the Microsoft Trust Center?",
+    "answer": "A website resource providing information about Microsoft's implementation of controls and processes that protect cloud-based services and the customer data therein."
+  },
+  {
+    "id": 131,
+    "category": "Compliance and Trust",
+    "question": "What is Azure Compliance Documentation?",
+    "answer": "Detailed documentation that helps customers understand how Azure services comply with regulatory standards and requirements."
+  },
+  {
+    "id": 132,
+    "category": "Compliance and Trust",
+    "question": "What is Azure Government?",
+    "answer": "A separate instance of Microsoft Azure that addresses the security and compliance needs of US federal agencies, state and local governments, and their solution providers."
+  },
+  {
+    "id": 133,
+    "category": "Compliance and Trust",
+    "question": "What is Azure China?",
+    "answer": "A physically separated instance of Azure cloud services operated by 21Vianet in China."
+  },
+  {
+    "id": 134,
+    "category": "Compliance and Trust",
+    "question": "What is ISO 27001?",
+    "answer": "An international standard for information security management systems (ISMS) with which Azure complies."
+  },
+  {
+    "id": 135,
+    "category": "Compliance and Trust",
+    "question": "What is GDPR compliance in Azure?",
+    "answer": "Azure's adherence to the European Union's General Data Protection Regulation, providing tools and resources to help organizations comply with GDPR requirements."
+  },
+  {
+    "id": 136,
+    "category": "Compliance and Trust",
+    "question": "What is HIPAA compliance in Azure?",
+    "answer": "Azure's adherence to the Health Insurance Portability and Accountability Act, offering features that help customers build HIPAA-compliant solutions."
+  },
+  {
+    "id": 137,
+    "category": "Compliance and Trust",
+    "question": "What is FedRAMP compliance?",
+    "answer": "Azure's adherence to the Federal Risk and Authorization Management Program, a US government-wide program that provides a standardized approach to security assessment, authorization, and continuous monitoring for cloud products and services."
+  },
+  {
+    "id": 138,
+    "category": "Compliance and Trust",
+    "question": "What is PCI DSS compliance in Azure?",
+    "answer": "Azure's adherence to the Payment Card Industry Data Security Standard, helping customers build solutions that comply with PCI requirements for processing credit card data."
+  },
+  {
+    "id": 139,
+    "category": "Compliance and Trust",
+    "question": "What is SOC compliance in Azure?",
+    "answer": "Azure's adherence to Service Organization Controls standards, offering SOC 1, SOC 2, and SOC 3 reports that detail controls related to financial reporting, security, availability, processing integrity, and confidentiality."
+  },
+  {
+    "id": 140,
+    "category": "Compliance and Trust",
+    "question": "What is an Azure Compliance Manager?",
+    "answer": "A tool that helps organizations meet complex compliance obligations by mapping Azure services to various regulatory requirements."
+  },
+  {
+    "id": 141,
+    "category": "Compliance and Trust",
+    "question": "What is Azure sovereign cloud?",
+    "answer": "Physically isolated instances of Azure (like Azure Government, Azure China) designed to address specific regulatory or compliance requirements of certain regions or industries."
+  },
+  {
+    "id": 142,
+    "category": "Compliance and Trust",
+    "question": "What is ISO 27018?",
+    "answer": "An international standard that Azure complies with, focusing on protection of personally identifiable information (PII) in public clouds."
+  },
+  {
+    "id": 143,
+    "category": "Compliance and Trust",
+    "question": "What is Azure Data Subject Request (DSR)?",
+    "answer": "Functionality that helps organizations respond to requests from individuals to access, correct, or delete their personal data as required by privacy regulations like GDPR."
+  },
+  {
+    "id": 144,
+    "category": "Compliance and Trust",
+    "question": "What is the Shared Responsibility Model for compliance?",
+    "answer": "A framework that defines how compliance responsibilities are shared between cloud providers and customers, with varying divisions based on the service model (IaaS, PaaS, SaaS)."
+  },
+  {
+    "id": 145,
+    "category": "Compliance and Trust",
+    "question": "What is data residency in Azure?",
+    "answer": "The concept that data is subject to the laws and regulations of the geographic location in which it is stored, which Azure addresses through its regional datacenter structure."
+  },
+  {
+    "id": 146,
+    "category": "Compliance and Trust",
+    "question": "What is Azure Policy for regulatory compliance?",
+    "answer": "Built-in policy definitions that help audit and enforce organization's compliance with specific regulatory standards."
+  },
+  {
+    "id": 147,
+    "category": "Compliance and Trust",
+    "question": "What is a Customer Lockbox?",
+    "answer": "An Azure feature that provides explicit control in the rare event that Microsoft needs to access customer data during a support request."
+  },
+  {
+    "id": 148,
+    "category": "Compliance and Trust",
+    "question": "What is Azure Attestation?",
+    "answer": "A unified solution for remotely verifying the trustworthiness of a platform and integrity of the binaries running inside it."
+  },
+  {
+    "id": 149,
+    "category": "Compliance and Trust",
+    "question": "What are Azure Blueprints compliance templates?",
+    "answer": "Pre-built blueprint definitions that help deploy and configure Azure environments that adhere to specific regulatory standards like ISO 27001, PCI-DSS, and HIPAA."
+  },
+  {
+    "id": 150,
+    "category": "Compliance and Trust",
+    "question": "What is Microsoft Defender for Identity?",
+    "answer": "A cloud-based security solution that uses Active Directory signals to identify, detect, and investigate advanced threats, compromised identities, and malicious insider actions."
+  }
+]

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120">
+  <!-- Define gradient for the hexagon -->
+  <defs>
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8a4fff"/>
+      <stop offset="100%" stop-color="#5a189a"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Main hexagon with gradient -->
+  <polygon points="30,60 60,30 120,30 150,60 120,90 60,90" fill="url(#purpleGradient)"/>
+  
+  <!-- Simplified lines instead of binary code -->
+  <line x1="75" y1="45" x2="105" y2="45" stroke="white" stroke-width="5"/>
+  <line x1="75" y1="60" x2="105" y2="60" stroke="white" stroke-width="5"/>
+  <line x1="75" y1="75" x2="105" y2="75" stroke="white" stroke-width="5"/>
+  
+  <!-- WebByte text -->
+  <text x="170" y="75" font-family="Montserrat" font-weight="700" font-size="50">
+    <tspan fill="#6a2ca0">Web</tspan><tspan fill="#333333">Byte</tspan>
+  </text>
+  
+  <!-- Small favicon versions -->
+  <g transform="translate(380, 40) scale(0.5)">
+    <polygon points="30,60 60,30 120,30 150,60 120,90 60,90" fill="url(#purpleGradient)"/>
+    <line x1="75" y1="45" x2="105" y2="45" stroke="white" stroke-width="5"/>
+    <line x1="75" y1="60" x2="105" y2="60" stroke="white" stroke-width="5"/>
+    <line x1="75" y1="75" x2="105" y2="75" stroke="white" stroke-width="5"/>
+  </g>
+  
+  <g transform="translate(450, 40) scale(0.3)">
+    <polygon points="30,60 60,30 120,30 150,60 120,90 60,90" fill="url(#purpleGradient)"/>
+    <line x1="75" y1="45" x2="105" y2="45" stroke="white" stroke-width="5"/>
+    <line x1="75" y1="60" x2="105" y2="60" stroke="white" stroke-width="5"/>
+    <line x1="75" y1="75" x2="105" y2="75" stroke="white" stroke-width="5"/>
+  </g>
+  
+  <g transform="translate(490, 40) scale(0.15)">
+    <polygon points="30,60 60,30 120,30 150,60 120,90 60,90" fill="url(#purpleGradient)"/>
+    <line x1="75" y1="45" x2="105" y2="45" stroke="white" stroke-width="10"/>
+    <line x1="75" y1="60" x2="105" y2="60" stroke="white" stroke-width="10"/>
+    <line x1="75" y1="75" x2="105" y2="75" stroke="white" stroke-width="10"/>
+  </g>
+</svg>

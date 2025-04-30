@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Define gradient for the hexagon -->
+  <defs>
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8a4fff"/>
+      <stop offset="100%" stop-color="#5a189a"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Simple hexagon for favicon -->
+  <polygon points="15,50 30,25 70,25 85,50 70,75 30,75" fill="url(#purpleGradient)"/>
+  
+  <!-- Simplified lines instead of binary code -->
+  <line x1="42" y1="40" x2="58" y2="40" stroke="white" stroke-width="4"/>
+  <line x1="42" y1="50" x2="58" y2="50" stroke="white" stroke-width="4"/>
+  <line x1="42" y1="60" x2="58" y2="60" stroke="white" stroke-width="4"/>
+</svg>

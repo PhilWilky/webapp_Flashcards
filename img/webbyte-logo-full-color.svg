@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120">
+  <!-- Hexagonal icon with gradient -->
+  <defs>
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8a4fff"/>
+      <stop offset="100%" stop-color="#5a189a"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Hexagon shape -->
+  <polygon points="30,60 60,30 120,30 150,60 120,90 60,90" fill="url(#purpleGradient)"/>
+  
+  <!-- Binary code text -->
+  <text x="75" y="50" font-family="Courier New" font-size="14" fill="white">1010</text>
+  <text x="75" y="70" font-family="Courier New" font-size="14" fill="white">0101</text>
+  
+  <!-- WebByte text -->
+  <text x="170" y="75" font-family="Montserrat" font-weight="700" font-size="50">
+    <tspan fill="#6a2ca0">Web</tspan><tspan fill="#333333">Byte</tspan>
+  </text>
+</svg>

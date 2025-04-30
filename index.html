@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bit, Nibble and Byte Flashcards</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="company-logo">
+                <!-- <div class="logo-symbol">&lt;/&gt;</div> -->
+                <div class="logo-symbol">
+                    <img src="img/webbyte-logo-full-color.svg" width="300px" height="auto" alt="WebByte Logo">
+                </div>
+                <h1>Bit, Nibble and Byte</h1>
+            </div>
+            <div id="card-count" class="counter">Card 1 of 0</div>
+        </div>
+        
+        <div class="filters">
+            <div>
+                <span class="filter-label">Category:</span>
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <!-- Categories will be populated dynamically -->
+                </select>
+            </div>
+            <div style="flex-grow: 1;">
+                <span class="filter-label">Search:</span>
+                <input type="text" id="search-input" placeholder="Type to search...">
+            </div>
+        </div>
+        
+        <div class="category-display" id="category">Loading...</div>
+        
+        <div id="loading-indicator" class="loading">Loading flashcards...</div>
+        
+        <div class="card-container" style="display: none;">
+            <div class="card" id="flashcard">
+                <div class="card-face card-front">
+                    <div class="question" id="question">Loading question...</div>
+                    <div class="hint">Click to reveal answer</div>
+                </div>
+                <div class="card-face card-back">
+                    <div class="answer" id="answer">Loading answer...</div>
+                    <div class="hint">Click to see question</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="prev-btn" class="btn btn-secondary">Previous</button>
+            <button id="shuffle-btn" class="btn">Shuffle</button>
+            <button id="play-btn" class="btn play-btn">Auto Play</button>
+            <button id="next-btn" class="btn">Next</button>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value" id="total-cards">0</div>
+                <div class="stat-label">Total Cards</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="category-count">0</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="viewed-count">0</div>
+                <div class="stat-label">Cards Viewed</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            © 2025 Web Byte is operated by Bit, Nibble and Byte. All rights reserved.
+        </div>
+    </div>
+
+    <!-- Load JavaScript -->
+    <script src="/js/app.js"></script>
+</body>
+</html>
