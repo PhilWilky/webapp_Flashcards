@@ -23,17 +23,17 @@ const CONFIG = {
         { 
             id: 'azure-az900', 
             name: 'Azure AZ-900 Fundamentals', 
-            file: 'az-900.json'
+            file: '../az-900.json'
         },
         { 
             id: 'aws-cloud', 
             name: 'AWS Cloud Concepts', 
-            file: 'aws-flashcards.json'
+            file: '../aws-flashcards.json'
         },
         { 
             id: 'security-plus', 
             name: 'Security+ Certification', 
-            file: 'security-flashcards.json'
+            file: '../security-flashcards.json'
         }
     ],
     defaultDeck: 'azure-az900',
