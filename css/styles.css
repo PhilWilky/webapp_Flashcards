@@ -291,10 +291,6 @@ body {
         flex-direction: column;
         gap: 15px;
     }
-    .menu-toggle {
-        display: block; /* Show on mobile */
-        width: auto;
-    }
 
     .filters {
         display: none; /* Hidden by default on mobile */
@@ -317,4 +313,11 @@ body {
         padding: 8px 15px;
         font-size: 14px;
       }
+}
+
+/* Desktop styles - explicitly hide the menu toggle */
+@media (min-width: 601px) {
+    .menu-toggle {
+        display: none; /* Force hide on desktop, keep as last style in css to avoid !important */
+    }
 }
