@@ -19,6 +19,13 @@
             <div id="card-count" class="counter">Card 1 of 0</div>
         </div>
 
+        <div class="deck-selector-container">
+            <div class="deck-selector-label">Select Deck:</div>
+            <select id="deck-selector" class="deck-selector">
+                <!-- Options will be populated dynamically -->
+            </select>
+        </div>
+
         <div class="menu-toggle" id="menu-toggle">
             <i class="fa-solid fa-bars"></i>
           </div>
@@ -46,8 +53,12 @@
         
         <div class="category-display" id="category">Loading...</div>
         
-        <div id="loading-indicator" class="loading">Loading flashcards...</div>
-        
+        <div id="loading-indicator" class="loading">
+            <div class="spinner"></div>
+            <div id="loading-status">Loading flashcards...</div>
+            <div id="loading-progress"></div>
+        </div>
+                
         <div class="card-container" style="display: none;">
             <div class="swipe-indicator left-indicator">&lsaquo;</div>
                 <div class="card" id="flashcard">

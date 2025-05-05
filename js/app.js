@@ -18,13 +18,33 @@ let touchEndX = 0;
 
 // Configuration
 const CONFIG = {
-    jsonUrl: 'flashcards.json',
+    // Available decks (add more as needed)
+    decks: [
+        { 
+            id: 'azure-az900', 
+            name: 'Azure AZ-900 Fundamentals', 
+            file: 'az-900.json'
+        },
+        { 
+            id: 'aws-cloud', 
+            name: 'AWS Cloud Concepts', 
+            file: 'aws-flashcards.json'
+        },
+        { 
+            id: 'security-plus', 
+            name: 'Security+ Certification', 
+            file: 'security-flashcards.json'
+        }
+    ],
+    defaultDeck: 'azure-az900',
+    currentDeckId: 'azure-az900', // Will be updated when user selects a deck
     autoPlayInterval: 3000, // Time in ms for auto-play transitions
     cacheExpiry: 24 * 60 * 60 * 1000, // Cache expiry time (24 hours)
     localStorageKeys: {
-        data: 'flashcardsData',
-        timestamp: 'flashcardsTimestamp',
-        viewed: 'flashcardsViewed'
+        data: 'flashcardsData_', // Will append deck ID
+        timestamp: 'flashcardsTimestamp_', // Will append deck ID
+        viewed: 'flashcardsViewed_', // Will append deck ID
+        lastSelectedDeck: 'lastSelectedDeck'
     },
     swipeThreshold: 50 // Minimum distance required for a swipe to be registered
 };
@@ -54,6 +74,18 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.menuToggle = document.getElementById('menu-toggle');
     elements.filtersContainer = document.getElementById('filters-container');
     elements.swipeTooltip = document.getElementById('swipe-tooltip');
+    elements.deckSelector = document.getElementById('deck-selector');
+    elements.loadingStatus = document.getElementById('loading-status');
+    elements.loadingProgress = document.getElementById('loading-progress');
+    
+    // Load the last selected deck from localStorage if available
+    const lastSelectedDeck = localStorage.getItem(CONFIG.localStorageKeys.lastSelectedDeck);
+    if (lastSelectedDeck && CONFIG.decks.some(deck => deck.id === lastSelectedDeck)) {
+        CONFIG.currentDeckId = lastSelectedDeck;
+    }
+    
+    // Populate deck selector
+    populateDeckSelector();
     
     // Add event listeners
     elements.flashcard.addEventListener('click', flipCard);
@@ -97,6 +129,112 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+/**
+ * Update the loading status text
+ * @param {string} status - The main status message
+ * @param {string} [progress] - Optional progress details
+ */
+function updateLoadingStatus(status, progress = '') {
+    if (elements.loadingStatus) {
+        elements.loadingStatus.textContent = status;
+    }
+    
+    if (elements.loadingProgress) {
+        elements.loadingProgress.textContent = progress;
+    }
+}
+
+/**
+ * Show the loading indicator with a status message
+ * @param {string} status - The status message to display
+ * @param {string} [progress] - Optional progress details
+ */
+function showLoading(status, progress = '') {
+    if (elements.loadingIndicator) {
+        elements.loadingIndicator.style.display = 'flex';
+        updateLoadingStatus(status, progress);
+    }
+}
+
+/**
+ * Hide the loading indicator
+ */
+function hideLoading() {
+    if (elements.loadingIndicator) {
+        elements.loadingIndicator.style.display = 'none';
+    }
+}
+
+/**
+ * Populate the deck selector dropdown
+ */
+function populateDeckSelector() {
+    // Clear existing options
+    elements.deckSelector.innerHTML = '';
+    
+    // Add options based on available decks
+    CONFIG.decks.forEach(deck => {
+        const option = document.createElement('option');
+        option.value = deck.id;
+        option.textContent = deck.name;
+        elements.deckSelector.appendChild(option);
+    });
+    
+    // Set the current deck
+    elements.deckSelector.value = CONFIG.currentDeckId;
+    
+    // Add event listener for deck changes
+    elements.deckSelector.addEventListener('change', function() {
+        changeDeck(this.value);
+    });
+}
+
+/**
+ * Change the current deck
+ * @param {string} deckId - ID of the deck to change to
+ */
+function changeDeck(deckId) {
+    // Find the selected deck
+    const selectedDeck = CONFIG.decks.find(deck => deck.id === deckId);
+    
+    if (!selectedDeck) {
+        console.error('Deck not found:', deckId);
+        return;
+    }
+    
+    // Update the current deck
+    CONFIG.currentDeckId = deckId;
+    
+    // Save the selection to localStorage
+    localStorage.setItem(CONFIG.localStorageKeys.lastSelectedDeck, deckId);
+    
+    // Reset the app state
+    currentCardIndex = 0;
+    allCards = [];
+    filteredCards = [];
+    
+    // Stop auto-play if it's running
+    if (isPlaying) {
+        toggleAutoPlay();
+    }
+    
+    // Show loading indicator and hide card
+    elements.cardContainer.style.display = 'none';
+    showLoading(`Loading ${selectedDeck.name}...`, 'Initializing');
+    
+    // Reload flashcards with new deck
+    loadFlashcards();
+}
+
+/**
+ * Get the URL for the current deck's JSON file
+ * @returns {string} The URL to fetch the flashcards from
+ */
+function getJsonUrl() {
+    const selectedDeck = CONFIG.decks.find(deck => deck.id === CONFIG.currentDeckId);
+    return selectedDeck ? selectedDeck.file : CONFIG.decks[0].file;
+}
 
 /**
  * Handle touch start event
@@ -152,7 +290,9 @@ function showSwipeTooltip() {
  * Load viewed cards from local storage
  */
 function loadViewedCards() {
-    const viewedCardsData = localStorage.getItem(CONFIG.localStorageKeys.viewed);
+    const viewedCardsKey = CONFIG.localStorageKeys.viewed + CONFIG.currentDeckId;
+    const viewedCardsData = localStorage.getItem(viewedCardsKey);
+    
     if (viewedCardsData) {
         try {
             const viewedCardsArray = JSON.parse(viewedCardsData);
@@ -161,6 +301,8 @@ function loadViewedCards() {
             console.error('Error loading viewed cards:', error);
             viewedCards = new Set();
         }
+    } else {
+        viewedCards = new Set();
     }
 }
 
@@ -168,8 +310,9 @@ function loadViewedCards() {
  * Save viewed cards to local storage
  */
 function saveViewedCards() {
+    const viewedCardsKey = CONFIG.localStorageKeys.viewed + CONFIG.currentDeckId;
     const viewedCardsArray = Array.from(viewedCards);
-    localStorage.setItem(CONFIG.localStorageKeys.viewed, JSON.stringify(viewedCardsArray));
+    localStorage.setItem(viewedCardsKey, JSON.stringify(viewedCardsArray));
 }
 
 /**
@@ -178,54 +321,73 @@ function saveViewedCards() {
  */
 async function loadFlashcards() {
     try {
-        elements.loadingIndicator.textContent = 'Loading flashcards...';
+        // Get the current deck name for display
+        const selectedDeck = CONFIG.decks.find(deck => deck.id === CONFIG.currentDeckId);
+        const deckName = selectedDeck ? selectedDeck.name : 'Flashcards';
+        
+        showLoading(`Loading ${deckName}...`, 'Checking cache');
+        
+        // Get local storage keys for the current deck
+        const dataKey = CONFIG.localStorageKeys.data + CONFIG.currentDeckId;
+        const timestampKey = CONFIG.localStorageKeys.timestamp + CONFIG.currentDeckId;
         
         // Try to get from cache first
-        const cachedData = localStorage.getItem(CONFIG.localStorageKeys.data);
-        const cachedTimestamp = localStorage.getItem(CONFIG.localStorageKeys.timestamp);
+        const cachedData = localStorage.getItem(dataKey);
+        const cachedTimestamp = localStorage.getItem(timestampKey);
         
         // Use cache if available and not expired
         if (cachedData && cachedTimestamp && (Date.now() - Number(cachedTimestamp) < CONFIG.cacheExpiry)) {
-            console.log('Using cached flashcards data');
+            updateLoadingStatus(`Loading ${deckName}...`, 'Using cached data');
+            console.log('Using cached flashcards data for deck:', CONFIG.currentDeckId);
+            
             try {
+                updateLoadingStatus(`Loading ${deckName}...`, 'Parsing cached data');
                 allCards = JSON.parse(cachedData);
+                updateLoadingStatus(`Loading ${deckName}...`, 'Cache loaded successfully');
             } catch (error) {
                 console.error('Error parsing cached data:', error);
+                updateLoadingStatus(`Loading ${deckName}...`, 'Cache error, fetching fresh data');
                 // If cache is corrupted, fetch fresh data
                 allCards = await fetchFlashcardsData();
             }
         } else {
             // Fetch fresh data
-            console.log('Fetching fresh flashcards data');
+            updateLoadingStatus(`Loading ${deckName}...`, 'Fetching data from server');
+            console.log('Fetching fresh flashcards data for deck:', CONFIG.currentDeckId);
             allCards = await fetchFlashcardsData();
             
+            updateLoadingStatus(`Loading ${deckName}...`, 'Saving data to cache');
             // Cache the new data
-            localStorage.setItem(CONFIG.localStorageKeys.data, JSON.stringify(allCards));
-            localStorage.setItem(CONFIG.localStorageKeys.timestamp, Date.now().toString());
+            localStorage.setItem(dataKey, JSON.stringify(allCards));
+            localStorage.setItem(timestampKey, Date.now().toString());
         }
         
         // Initialize filtered cards
+        updateLoadingStatus(`Loading ${deckName}...`, 'Processing cards');
         filteredCards = [...allCards];
         
         // Populate category filter
+        updateLoadingStatus(`Loading ${deckName}...`, 'Building category filters');
         populateCategoryFilter();
         
         // Update stats
+        updateLoadingStatus(`Loading ${deckName}...`, 'Updating statistics');
         updateStats();
         
         // Display the first card
         if (filteredCards.length > 0) {
+            updateLoadingStatus(`Loading ${deckName}...`, 'Preparing to display cards');
             displayCard();
-            elements.loadingIndicator.style.display = 'none';
+            hideLoading();
             elements.cardContainer.style.display = 'block';
             // Show swipe tooltip on mobile
             showSwipeTooltip();
         } else {
-            elements.loadingIndicator.textContent = 'No flashcards found. Please check the JSON file path.';
+            updateLoadingStatus('No flashcards found', 'Please try another deck');
         }
     } catch (error) {
         console.error('Error loading flashcards:', error);
-        elements.loadingIndicator.textContent = 'Error loading flashcards. Please check the console for details.';
+        updateLoadingStatus('Error loading flashcards', error.message);
     }
 }
 
@@ -235,31 +397,35 @@ async function loadFlashcards() {
  */
 async function fetchFlashcardsData(retries = 3) {
     try {
-        // Log the URL being fetched to help with debugging
-        console.log('Fetching data from:', CONFIG.jsonUrl);
+        const jsonUrl = getJsonUrl();
+        console.log('Fetching data from:', jsonUrl);
+        updateLoadingStatus('Fetching data...', `From ${jsonUrl}`);
         
-        const response = await fetch(CONFIG.jsonUrl);
+        const response = await fetch(jsonUrl);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
+        updateLoadingStatus('Fetching data...', 'Parsing JSON response');
         const data = await response.json();
+        updateLoadingStatus('Fetching data...', `Loaded ${data.length} cards successfully`);
         console.log('Data fetched successfully:', data.length, 'cards');
         return data;
     } catch (error) {
         console.error(`Fetch error: ${error.message}`);
+        updateLoadingStatus('Fetch error', `${error.message}`);
         
         if (retries > 0) {
+            updateLoadingStatus('Fetch error', `Retrying... (${retries} attempts left)`);
             console.log(`Retrying fetch... (${retries} attempts left)`);
-            // Wait 1 second before retrying
             await new Promise(resolve => setTimeout(resolve, 1000));
             return fetchFlashcardsData(retries - 1);
         }
         
-        // If all retries fail, return embedded data if available
-        console.log('All fetch attempts failed. Using embedded data if available.');
-        // You could include a small subset of cards here as fallback
+        // If all retries fail, return empty array
+        updateLoadingStatus('Fetch failed', 'Could not load flashcards');
+        console.log('All fetch attempts failed. No flashcards loaded.');
         return [];
     }
 }
@@ -323,7 +489,7 @@ function filterCards() {
     } else {
         elements.cardContainer.style.display = 'none';
         elements.loadingIndicator.style.display = 'block';
-        elements.loadingIndicator.textContent = 'No cards match your filters.';
+        updateLoadingStatus('No cards match your filters', 'Try different filter criteria');
         
         // Update counter and category display
         elements.cardCountElement.textContent = 'Card 0 of 0';
