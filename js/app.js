@@ -24,7 +24,7 @@ const CONFIG = {
             id: 'azure-az900', 
             name: 'Azure AZ-900 Fundamentals', 
             // Use absolute path for GitHub Pages
-            file: '/webapp_Flashcards/az-900.json'
+            file: 'az-900.json'
         }
     ],
     defaultDeck: 'azure-az900',
