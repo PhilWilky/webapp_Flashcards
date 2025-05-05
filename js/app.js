@@ -332,10 +332,8 @@ function saveViewedCards() {
 
 
 /**
- * Fetch flashcards data with multiple fallback strategies
- * This approach tries several different paths that might work on GitHub Pages
+ * Fetch flashcards with direct hard-coded paths
  */
-
 async function fetchFlashcardsData(retries = 3) {
     // Define all possible paths to try in order
     const pathsToTry = [];
@@ -344,20 +342,16 @@ async function fetchFlashcardsData(retries = 3) {
     const isGitHubPages = window.location.hostname.includes('github.io');
     
     if (isGitHubPages) {
-        const repoName = window.location.pathname.split('/')[1] || 'webapp_Flashcards';
-        
-        // Add all possible GitHub Pages paths to try
+        // Add all possible GitHub Pages paths to try - these are complete absolute paths
         pathsToTry.push(
-            `/${repoName}/az-900.json`,                 // /webapp_Flashcards/az-900.json
-            `/az-900.json`,                            // /az-900.json (in case repo is at root)
-            `https://philwilky.github.io/${repoName}/az-900.json`, // Full URL
-            `https://raw.githubusercontent.com/PhilWilky/webapp_Flashcards/main/az-900.json` // Raw GitHub content
+            '/webapp_Flashcards/az-900.json',                   // Direct path to file
+            'https://philwilky.github.io/webapp_Flashcards/az-900.json', // Full URL
+            'https://raw.githubusercontent.com/PhilWilky/webapp_Flashcards/main/az-900.json' // Raw GitHub content
         );
     } else {
         // Local development paths to try
         pathsToTry.push(
             'az-900.json',       // Same directory
-            '/az-900.json',      // Root directory
             '../az-900.json'     // Parent directory
         );
     }
@@ -369,17 +363,17 @@ async function fetchFlashcardsData(retries = 3) {
     // Try each path in sequence
     for (let i = 0; i < pathsToTry.length; i++) {
         const path = pathsToTry[i];
-        console.log(`Attempting path ${i+1}/${pathsToTry.length}: ${path}`);
+        console.log(`Trying path ${i+1}/${pathsToTry.length}: ${path}`);
+        updateLoadingStatus('Fetching data...', `Try ${i+1}: ${path}`);
         
         try {
             // Add timeout to prevent hanging
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 10000);
             
-            updateLoadingStatus('Fetching data...', `Trying path: ${path}`);
             const response = await fetch(path, { 
                 signal: controller.signal,
-                cache: 'no-store' // Prevent caching
+                cache: 'no-store' // Prevent caching issues
             });
             clearTimeout(timeoutId);
             
@@ -394,13 +388,6 @@ async function fetchFlashcardsData(retries = 3) {
             try {
                 const data = JSON.parse(text);
                 console.log('JSON parsed successfully, items:', data.length);
-                updateLoadingStatus('Success!', `Loaded ${data.length} cards from ${path}`);
-                
-                // Store the successful path for future use
-                if (window.localStorage) {
-                    window.localStorage.setItem('successful_json_path', path);
-                }
-                
                 return data;
             } catch (parseError) {
                 console.error('JSON parse error:', parseError);
@@ -408,31 +395,21 @@ async function fetchFlashcardsData(retries = 3) {
             }
         } catch (fetchError) {
             console.log(`Fetch error for path ${path}:`, fetchError.message);
-            // Continue to next path
+            continue; // Try next path
         }
     }
     
     // If we got here, all paths failed
-    console.error('All paths failed');
+    console.error('All paths failed to fetch JSON data');
     
-    // Try loading from cache as last resort
-    if (window.localStorage) {
-        const cachedDataKey = CONFIG.localStorageKeys.data + CONFIG.currentDeckId;
-        const cachedData = localStorage.getItem(cachedDataKey);
-        
-        if (cachedData) {
-            try {
-                console.log('Attempting to use cached data as last resort');
-                updateLoadingStatus('Fetch failed', 'Using cached data as fallback');
-                return JSON.parse(cachedData);
-            } catch (e) {
-                console.error('Failed to parse cached data:', e);
-            }
-        }
+    if (retries > 0) {
+        console.log(`Retrying entire process... (${retries} attempts left)`);
+        updateLoadingStatus('All paths failed', `Retrying (${retries} attempts left)`);
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        return fetchFlashcardsData(retries - 1);
     }
     
-    // Everything failed
-    updateLoadingStatus('Fetch failed', 'Could not load flashcards from any source');
+    updateLoadingStatus('Fetch failed', 'All paths failed to access flashcards data');
     return [];
 }
 
