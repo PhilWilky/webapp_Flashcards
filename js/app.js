@@ -23,30 +23,21 @@ const CONFIG = {
         { 
             id: 'azure-az900', 
             name: 'Azure AZ-900 Fundamentals', 
-            file: '../az-900.json'
-        },
-        { 
-            id: 'aws-cloud', 
-            name: 'AWS Cloud Concepts', 
-            file: '../aws-flashcards.json'
-        },
-        { 
-            id: 'security-plus', 
-            name: 'Security+ Certification', 
-            file: '../security-flashcards.json'
+            // Use absolute path for GitHub Pages
+            file: '/webapp_Flashcards/az-900.json'
         }
     ],
     defaultDeck: 'azure-az900',
-    currentDeckId: 'azure-az900', // Will be updated when user selects a deck
-    autoPlayInterval: 3000, // Time in ms for auto-play transitions
-    cacheExpiry: 24 * 60 * 60 * 1000, // Cache expiry time (24 hours)
+    currentDeckId: 'azure-az900',
+    autoPlayInterval: 3000,
+    cacheExpiry: 24 * 60 * 60 * 1000,
     localStorageKeys: {
-        data: 'flashcardsData_', // Will append deck ID
-        timestamp: 'flashcardsTimestamp_', // Will append deck ID
-        viewed: 'flashcardsViewed_', // Will append deck ID
+        data: 'flashcardsData_',
+        timestamp: 'flashcardsTimestamp_',
+        viewed: 'flashcardsViewed_',
         lastSelectedDeck: 'lastSelectedDeck'
     },
-    swipeThreshold: 50 // Minimum distance required for a swipe to be registered
+    swipeThreshold: 50
 };
 
 // DOM Elements
@@ -339,178 +330,80 @@ function saveViewedCards() {
     localStorage.setItem(viewedCardsKey, JSON.stringify(viewedCardsArray));
 }
 
-/**
- * Load flashcards from the remote JSON source
- * with caching for better performance
- */
-async function loadFlashcards() {
-    try {
-        // Get the current deck name for display
-        const selectedDeck = CONFIG.decks.find(deck => deck.id === CONFIG.currentDeckId);
-        const deckName = selectedDeck ? selectedDeck.name : 'Flashcards';
-        
-        showLoading(`Loading ${deckName}...`, 'Checking cache');
-        
-        // Get local storage keys for the current deck
-        const dataKey = CONFIG.localStorageKeys.data + CONFIG.currentDeckId;
-        const timestampKey = CONFIG.localStorageKeys.timestamp + CONFIG.currentDeckId;
-        
-        // Try to get from cache first
-        const cachedData = localStorage.getItem(dataKey);
-        const cachedTimestamp = localStorage.getItem(timestampKey);
-        
-        // Use cache if available and not expired
-        if (cachedData && cachedTimestamp && (Date.now() - Number(cachedTimestamp) < CONFIG.cacheExpiry)) {
-            updateLoadingStatus(`Loading ${deckName}...`, 'Using cached data');
-            console.log('Using cached flashcards data for deck:', CONFIG.currentDeckId);
-            
-            try {
-                updateLoadingStatus(`Loading ${deckName}...`, 'Parsing cached data');
-                allCards = JSON.parse(cachedData);
-                updateLoadingStatus(`Loading ${deckName}...`, 'Cache loaded successfully');
-            } catch (error) {
-                console.error('Error parsing cached data:', error);
-                updateLoadingStatus(`Loading ${deckName}...`, 'Cache error, fetching fresh data');
-                // If cache is corrupted, fetch fresh data
-                allCards = await fetchFlashcardsData();
-            }
-        } else {
-            // Fetch fresh data
-            updateLoadingStatus(`Loading ${deckName}...`, 'Fetching data from server');
-            console.log('Fetching fresh flashcards data for deck:', CONFIG.currentDeckId);
-            allCards = await fetchFlashcardsData();
-            
-            updateLoadingStatus(`Loading ${deckName}...`, 'Saving data to cache');
-            // Cache the new data
-            localStorage.setItem(dataKey, JSON.stringify(allCards));
-            localStorage.setItem(timestampKey, Date.now().toString());
-        }
-        
-        // Initialize filtered cards
-        updateLoadingStatus(`Loading ${deckName}...`, 'Processing cards');
-        filteredCards = [...allCards];
-        
-        // Populate category filter
-        updateLoadingStatus(`Loading ${deckName}...`, 'Building category filters');
-        populateCategoryFilter();
-        
-        // Update stats
-        updateLoadingStatus(`Loading ${deckName}...`, 'Updating statistics');
-        updateStats();
-        
-        // Display the first card
-        if (filteredCards.length > 0) {
-            updateLoadingStatus(`Loading ${deckName}...`, 'Preparing to display cards');
-            displayCard();
-            hideLoading();
-            elements.cardContainer.style.display = 'block';
-            // Show swipe tooltip on mobile
-            showSwipeTooltip();
-        } else {
-            updateLoadingStatus('No flashcards found', 'Please try another deck');
-        }
-    } catch (error) {
-        console.error('Error loading flashcards:', error);
-        updateLoadingStatus('Error loading flashcards', error.message);
-    }
-}
 
-/**
- * Fetch flashcards data from the remote URL
- * with error handling and retries
- */
 async function fetchFlashcardsData(retries = 3) {
     try {
-        const jsonUrl = getJsonUrl();
+        // For GitHub Pages deployment, use the direct path to the JSON file
+        // This bypasses the complex path resolution logic that might be failing
+        let jsonUrl = '';
+        
+        // Check if we're on GitHub Pages
+        if (window.location.hostname.includes('github.io')) {
+            // Direct hardcoded path to the JSON file on GitHub Pages
+            jsonUrl = '/webapp_Flashcards/az-900.json';
+            console.log('Using GitHub Pages direct path:', jsonUrl);
+        } else {
+            // For local development
+            jsonUrl = 'az-900.json';
+            console.log('Using local development path:', jsonUrl);
+        }
+        
         console.log('Environment:', window.location.hostname);
         console.log('Full URL:', window.location.href);
-        console.log('Pathname:', window.location.pathname);
-        console.log('Fetching data from URL:', jsonUrl);
-        updateLoadingStatus('Fetching data...', `From ${jsonUrl}`);
+        console.log('Attempting to fetch from:', jsonUrl);
         
         // Add timeout to prevent hanging forever
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+        const timeoutId = setTimeout(() => controller.abort(), 15000);
         
         try {
-            // Try with a direct fetch first
             const response = await fetch(jsonUrl, { 
                 signal: controller.signal,
-                cache: 'no-store' // Add cache busting
+                cache: 'no-store' // Prevent caching
             });
             clearTimeout(timeoutId);
             
             if (!response.ok) {
+                console.error(`Fetch failed with status: ${response.status}`);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             
-            // Use text() first to check for valid JSON
             const text = await response.text();
+            console.log('Response received, length:', text.length);
+            console.log('First 100 chars:', text.substring(0, 100));
             
             try {
-                // Then parse the text to JSON
                 const data = JSON.parse(text);
-                updateLoadingStatus('Fetching data...', `Loaded ${data.length} cards successfully`);
-                console.log('Data fetched successfully:', data.length, 'cards');
+                console.log('Data parsed successfully, items:', data.length);
                 return data;
             } catch (parseError) {
                 console.error('JSON parse error:', parseError);
-                console.error('Received text (first 100 chars):', text.substring(0, 100) + '...');
-                updateLoadingStatus('Parse error', 'Invalid JSON format');
                 throw new Error('Failed to parse JSON: ' + parseError.message);
             }
         } catch (fetchError) {
             clearTimeout(timeoutId);
             
-            // If fetch failed, try with a full URL including the repo name
-            if (window.location.hostname.includes('github.io')) {
-                console.log('Initial fetch failed, trying alternative GitHub Pages URL');
+            // If the first attempt fails, try an alternative path as fallback
+            if (retries > 0) {
+                console.log(`Fetch attempt failed: ${fetchError.message}`);
+                console.log(`Retrying with ${retries} attempts left`);
                 
-                // Construct a full GitHub Pages URL as fallback
-                const repoName = window.location.pathname.split('/')[1];
-                const fullGitHubURL = `/${repoName}/${jsonUrl}`;
-                console.log('Trying alternative URL:', fullGitHubURL);
-                
-                try {
-                    const altResponse = await fetch(fullGitHubURL, { cache: 'no-store' });
-                    
-                    if (!altResponse.ok) {
-                        throw new Error(`HTTP error! status: ${altResponse.status}`);
-                    }
-                    
-                    const altText = await altResponse.text();
-                    const altData = JSON.parse(altText);
-                    console.log('Alternative fetch successful:', altData.length, 'cards');
-                    return altData;
-                } catch (altError) {
-                    console.error('Alternative fetch also failed:', altError);
-                    throw fetchError; // Throw the original error for retry logic
-                }
-            } else {
-                throw fetchError;
+                // Wait before retrying
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                return fetchFlashcardsData(retries - 1);
             }
+            
+            throw fetchError;
         }
     } catch (error) {
-        // Handle abort errors gracefully
         if (error.name === 'AbortError') {
             console.error('Fetch request timed out');
-            updateLoadingStatus('Fetch timed out', 'Request took too long');
         } else {
-            console.error(`Fetch error: ${error.message}`);
-            updateLoadingStatus('Fetch error', `${error.message}`);
+            console.error(`Fetch error:`, error);
         }
         
-        if (retries > 0) {
-            updateLoadingStatus('Fetch error', `Retrying... (${retries} attempts left)`);
-            console.log(`Retrying fetch... (${retries} attempts left)`);
-            // Delay between retries
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            return fetchFlashcardsData(retries - 1);
-        }
-        
-        // If all retries fail, return empty array
-        updateLoadingStatus('Fetch failed', 'Could not load flashcards');
-        console.log('All fetch attempts failed. No flashcards loaded.');
+        // Return empty array after all retries failed
+        console.error('All fetch attempts failed');
         return [];
     }
 }
