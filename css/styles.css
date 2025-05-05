@@ -71,51 +71,38 @@ body {
     text-align: center;
     max-width: 80%;
     display: none;
-  }
+}
   
-  .tooltip-content p {
+.tooltip-content p {
     margin-bottom: 10px;
-  }
+}
   
-  .tooltip-btn {
+.tooltip-btn {
     background-color: #3498db;
     color: white;
     border: none;
     padding: 5px 15px;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  .deck-selector-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.deck-selector-label {
-    font-weight: bold;
-    margin-right: 10px;
-    white-space: nowrap;
+/* Moved deck selector styles to be part of filters */
+.deck-selector-wrapper {
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .deck-selector {
-    flex-grow: 1;
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ddd;
     background-color: #f5f7fa;
     font-size: 14px;
+    width: 100%;
 }
-
-  
 
 /* Filter Controls */
 .menu-toggle {
-    display: none; /* Hidden by default on desktop */
     cursor: pointer;
     position: absolute;
     top: 15px;
@@ -128,14 +115,21 @@ body {
     background-color: #f5f7fa;
     border-radius: 5px;
     z-index: 100;
-  }
+}
 
 .filters {
     margin-bottom: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    display: none; /* Hidden by default, shown when active */
+    flex-direction: column;
     gap: 15px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filters.active {
+    display: flex; /* Show when active */
 }
 
 .filter-label {
@@ -147,15 +141,14 @@ body {
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ddd;
-    min-width: 200px;
+    width: 100%;
 }
 
 #search-input {
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ddd;
-    flex-grow: 1;
-    min-width: 150px;
+    width: 100%;
 }
 
 /* Card Styles */
@@ -175,15 +168,15 @@ body {
     opacity: 0.6;
     z-index: 10;
     display: none; /* Hidden by default, shown only on mobile */
-  }
+}
   
-  .left-indicator {
+.left-indicator {
     left: 5px;
-  }
+}
   
-  .right-indicator {
+.right-indicator {
     right: 5px;
-  }
+}
 
 
 .card {
@@ -396,20 +389,12 @@ body {
         flex-direction: column;
         gap: 15px;
     }
-
-    .filters {
-        display: none; /* Hidden by default on mobile */
-      }
-      
-      .filters.active {
-        display: flex; /* Show when active */
-        /* Style the dropdown appearance */
-      }
-
-      .logo-symbol {
-        display:none;
-      }
-      .controls {
+    
+    .logo-symbol {
+        display: none;
+    }
+    
+    .controls {
         flex-direction: column;
         gap: 10px;
     }
@@ -436,33 +421,27 @@ body {
         padding: 8px 15px;
         font-size: 14px;
     }
-      .btn {
-        width: 100%;
-        padding: 8px 15px;
-        font-size: 14px;
-      }
-      .swipe-indicator {
+    
+    .swipe-indicator {
         display: block;
-      }
-
-      .deck-selector-container {
-        flex-direction: column;
-        align-items: flex-start;
     }
-    
-    .deck-selector-label {
-        margin-bottom: 5px;
-    }
-    
-    .deck-selector {
-        width: 100%;
-    }
-    
 }
 
-/* Desktop styles - explicitly hide the menu toggle */
+/* Desktop styles */
 @media (min-width: 601px) {
     .menu-toggle {
-        display: none; /* Force hide on desktop, keep as last style in css to avoid !important */
+        display: none; /* Hide menu toggle on desktop */
+    }
+    
+    .filters {
+        display: flex; /* Always show filters on desktop */
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .deck-selector-wrapper {
+        width: auto;
+        margin-bottom: 0;
+        margin-right: 15px;
     }
 }

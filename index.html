@@ -19,25 +19,25 @@
             <div id="card-count" class="counter">Card 1 of 0</div>
         </div>
 
-        <div class="deck-selector-container">
-            <div class="deck-selector-label">Select Deck:</div>
-            <select id="deck-selector" class="deck-selector">
-                <!-- Options will be populated dynamically -->
-            </select>
-        </div>
-
         <div class="menu-toggle" id="menu-toggle">
             <i class="fa-solid fa-bars"></i>
-          </div>
+        </div>
         
-          <div id="swipe-tooltip" class="tooltip">
+        <div id="swipe-tooltip" class="tooltip">
             <div class="tooltip-content">
               <p>Swipe left or right to navigate cards</p>
               <button id="got-it-btn" class="tooltip-btn">Got it!</button>
             </div>
-          </div>
+        </div>
 
-          <div class="filters" id="filters-container">
+        <div class="filters" id="filters-container">
+            <!-- Moved deck selector inside the filters container -->
+            <div class="deck-selector-wrapper">
+                <span class="filter-label">Select Deck:</span>
+                <select id="deck-selector" class="deck-selector">
+                    <!-- Options will be populated dynamically -->
+                </select>
+            </div>
             <div>
                 <span class="filter-label">Category:</span>
                 <select id="category-filter">

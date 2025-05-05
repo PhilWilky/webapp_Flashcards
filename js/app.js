@@ -332,7 +332,9 @@ function saveViewedCards() {
 
 
 /**
- * Fetch flashcards with direct hard-coded paths
+ * Fetch flashcards data from the JSON file
+ * @param {number} retries - Number of retry attempts if all paths fail
+ * @returns {Array} Array of flashcard objects
  */
 async function fetchFlashcardsData(retries = 3) {
     // Define all possible paths to try in order
@@ -413,8 +415,6 @@ async function fetchFlashcardsData(retries = 3) {
     return [];
 }
 
-
-
 /**
  * Load flashcards function with better error handling
  */
@@ -493,8 +493,6 @@ async function loadFlashcards() {
         updateLoadingStatus('Error loading flashcards', error.message);
     }
 }
-
-
 
 /**
  * Populate category dropdown with unique categories
