@@ -12,6 +12,10 @@ let isPlaying = false;
 let playInterval;
 let viewedCards = new Set();
 
+// Add touch gesture support
+let touchStartX = 0;
+let touchEndX = 0;
+
 // Configuration
 const CONFIG = {
     // Replace this URL with the actual location of your JSON file
@@ -56,6 +60,15 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.playBtn.addEventListener('click', toggleAutoPlay);
     elements.categoryFilter.addEventListener('change', filterCards);
     elements.searchInput.addEventListener('input', filterCards);
+
+    elements.flashcard.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+
+      elements.flashcard.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      });
     
     // Load previously viewed cards from local storage
     loadViewedCards();
@@ -354,3 +367,35 @@ window.addEventListener('offline', () => {
         document.body.prepend(offlineNotice);
     }
 });
+
+// In your existing DOMContentLoaded event:
+elements.menuToggle = document.getElementById('menu-toggle');
+elements.filtersContainer = document.getElementById('filters-container');
+
+// Add event listener for menu toggle
+elements.menuToggle.addEventListener('click', function() {
+  elements.filtersContainer.classList.toggle('active');
+});
+
+// Optional: Close menu when clicking outside
+document.addEventListener('click', function(event) {
+  if (!elements.filtersContainer.contains(event.target) && 
+      !elements.menuToggle.contains(event.target) &&
+      elements.filtersContainer.classList.contains('active')) {
+    elements.filtersContainer.classList.remove('active');
+  }
+});
+
+function handleSwipe() {
+    const swipeThreshold = 50;
+    
+    if (touchEndX < touchStartX - swipeThreshold) {
+      // Swiped left - go to next card
+      nextCard();
+    }
+    
+    if (touchEndX > touchStartX + swipeThreshold) {
+      // Swiped right - go to previous card
+      previousCard();
+    }
+  }

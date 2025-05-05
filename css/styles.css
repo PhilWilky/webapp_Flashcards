@@ -58,6 +58,22 @@ body {
 }
 
 /* Filter Controls */
+.menu-toggle {
+    display: none; /* Hidden by default on desktop */
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f7fa;
+    border-radius: 5px;
+    z-index: 100;
+  }
+
 .filters {
     margin-bottom: 20px;
     display: flex;
@@ -275,4 +291,30 @@ body {
         flex-direction: column;
         gap: 15px;
     }
+    .menu-toggle {
+        display: block; /* Show on mobile */
+        width: auto;
+    }
+
+    .filters {
+        display: none; /* Hidden by default on mobile */
+      }
+      
+      .filters.active {
+        display: flex; /* Show when active */
+        /* Style the dropdown appearance */
+      }
+
+      .logo-symbol {
+        display:none;
+      }
+      .controls {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .btn {
+        width: 100%;
+        padding: 8px 15px;
+        font-size: 14px;
+      }
 }
