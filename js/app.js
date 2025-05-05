@@ -331,82 +331,192 @@ function saveViewedCards() {
 }
 
 
+/**
+ * Fetch flashcards data with multiple fallback strategies
+ * This approach tries several different paths that might work on GitHub Pages
+ */
+
 async function fetchFlashcardsData(retries = 3) {
-    try {
-        // For GitHub Pages deployment, use the direct path to the JSON file
-        // This bypasses the complex path resolution logic that might be failing
-        let jsonUrl = '';
+    // Define all possible paths to try in order
+    const pathsToTry = [];
+    
+    // Check if we're on GitHub Pages
+    const isGitHubPages = window.location.hostname.includes('github.io');
+    
+    if (isGitHubPages) {
+        const repoName = window.location.pathname.split('/')[1] || 'webapp_Flashcards';
         
-        // Check if we're on GitHub Pages
-        if (window.location.hostname.includes('github.io')) {
-            // Direct hardcoded path to the JSON file on GitHub Pages
-            jsonUrl = '/webapp_Flashcards/az-900.json';
-            console.log('Using GitHub Pages direct path:', jsonUrl);
-        } else {
-            // For local development
-            jsonUrl = 'az-900.json';
-            console.log('Using local development path:', jsonUrl);
-        }
-        
-        console.log('Environment:', window.location.hostname);
-        console.log('Full URL:', window.location.href);
-        console.log('Attempting to fetch from:', jsonUrl);
-        
-        // Add timeout to prevent hanging forever
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000);
+        // Add all possible GitHub Pages paths to try
+        pathsToTry.push(
+            `/${repoName}/az-900.json`,                 // /webapp_Flashcards/az-900.json
+            `/az-900.json`,                            // /az-900.json (in case repo is at root)
+            `https://philwilky.github.io/${repoName}/az-900.json`, // Full URL
+            `https://raw.githubusercontent.com/PhilWilky/webapp_Flashcards/main/az-900.json` // Raw GitHub content
+        );
+    } else {
+        // Local development paths to try
+        pathsToTry.push(
+            'az-900.json',       // Same directory
+            '/az-900.json',      // Root directory
+            '../az-900.json'     // Parent directory
+        );
+    }
+    
+    console.log('Environment:', window.location.hostname);
+    console.log('Full URL:', window.location.href);
+    console.log('Paths to try:', pathsToTry);
+    
+    // Try each path in sequence
+    for (let i = 0; i < pathsToTry.length; i++) {
+        const path = pathsToTry[i];
+        console.log(`Attempting path ${i+1}/${pathsToTry.length}: ${path}`);
         
         try {
-            const response = await fetch(jsonUrl, { 
+            // Add timeout to prevent hanging
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
+            
+            updateLoadingStatus('Fetching data...', `Trying path: ${path}`);
+            const response = await fetch(path, { 
                 signal: controller.signal,
                 cache: 'no-store' // Prevent caching
             });
             clearTimeout(timeoutId);
             
             if (!response.ok) {
-                console.error(`Fetch failed with status: ${response.status}`);
-                throw new Error(`HTTP error! status: ${response.status}`);
+                console.log(`Path ${path} failed with status: ${response.status}`);
+                continue; // Try next path
             }
             
             const text = await response.text();
-            console.log('Response received, length:', text.length);
-            console.log('First 100 chars:', text.substring(0, 100));
+            console.log(`Path ${path} succeeded! Response length: ${text.length}`);
             
             try {
                 const data = JSON.parse(text);
-                console.log('Data parsed successfully, items:', data.length);
+                console.log('JSON parsed successfully, items:', data.length);
+                updateLoadingStatus('Success!', `Loaded ${data.length} cards from ${path}`);
+                
+                // Store the successful path for future use
+                if (window.localStorage) {
+                    window.localStorage.setItem('successful_json_path', path);
+                }
+                
                 return data;
             } catch (parseError) {
                 console.error('JSON parse error:', parseError);
-                throw new Error('Failed to parse JSON: ' + parseError.message);
+                continue; // Try next path
             }
         } catch (fetchError) {
-            clearTimeout(timeoutId);
-            
-            // If the first attempt fails, try an alternative path as fallback
-            if (retries > 0) {
-                console.log(`Fetch attempt failed: ${fetchError.message}`);
-                console.log(`Retrying with ${retries} attempts left`);
-                
-                // Wait before retrying
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                return fetchFlashcardsData(retries - 1);
-            }
-            
-            throw fetchError;
+            console.log(`Fetch error for path ${path}:`, fetchError.message);
+            // Continue to next path
         }
-    } catch (error) {
-        if (error.name === 'AbortError') {
-            console.error('Fetch request timed out');
-        } else {
-            console.error(`Fetch error:`, error);
+    }
+    
+    // If we got here, all paths failed
+    console.error('All paths failed');
+    
+    // Try loading from cache as last resort
+    if (window.localStorage) {
+        const cachedDataKey = CONFIG.localStorageKeys.data + CONFIG.currentDeckId;
+        const cachedData = localStorage.getItem(cachedDataKey);
+        
+        if (cachedData) {
+            try {
+                console.log('Attempting to use cached data as last resort');
+                updateLoadingStatus('Fetch failed', 'Using cached data as fallback');
+                return JSON.parse(cachedData);
+            } catch (e) {
+                console.error('Failed to parse cached data:', e);
+            }
+        }
+    }
+    
+    // Everything failed
+    updateLoadingStatus('Fetch failed', 'Could not load flashcards from any source');
+    return [];
+}
+
+
+
+/**
+ * Load flashcards function with better error handling
+ */
+async function loadFlashcards() {
+    try {
+        // Get the current deck name for display
+        const selectedDeck = CONFIG.decks.find(deck => deck.id === CONFIG.currentDeckId);
+        const deckName = selectedDeck ? selectedDeck.name : 'Flashcards';
+        
+        showLoading(`Loading ${deckName}...`, 'Initializing');
+        
+        // Check if we have a previously successful path stored
+        let usedCache = false;
+        if (window.localStorage) {
+            const cachedDataKey = CONFIG.localStorageKeys.data + CONFIG.currentDeckId;
+            const cachedTimestampKey = CONFIG.localStorageKeys.timestamp + CONFIG.currentDeckId;
+            const cachedData = localStorage.getItem(cachedDataKey);
+            const cachedTimestamp = localStorage.getItem(cachedTimestampKey);
+            
+            if (cachedData && cachedTimestamp && (Date.now() - Number(cachedTimestamp) < CONFIG.cacheExpiry)) {
+                try {
+                    updateLoadingStatus(`Loading ${deckName}...`, 'Using cached data');
+                    console.log('Using cached flashcards data');
+                    
+                    allCards = JSON.parse(cachedData);
+                    usedCache = true;
+                    console.log('Cache loaded successfully, cards:', allCards.length);
+                } catch (error) {
+                    console.error('Error parsing cached data:', error);
+                    usedCache = false;
+                }
+            }
         }
         
-        // Return empty array after all retries failed
-        console.error('All fetch attempts failed');
-        return [];
+        // If not using cache, fetch fresh data
+        if (!usedCache) {
+            updateLoadingStatus(`Loading ${deckName}...`, 'Fetching fresh data');
+            console.log('Fetching fresh flashcards data');
+            allCards = await fetchFlashcardsData();
+            
+            // Only cache if we got data
+            if (allCards && allCards.length > 0) {
+                updateLoadingStatus(`Loading ${deckName}...`, 'Saving to cache');
+                localStorage.setItem(CONFIG.localStorageKeys.data + CONFIG.currentDeckId, JSON.stringify(allCards));
+                localStorage.setItem(CONFIG.localStorageKeys.timestamp + CONFIG.currentDeckId, Date.now().toString());
+            }
+        }
+        
+        // Initialize filtered cards
+        updateLoadingStatus(`Loading ${deckName}...`, 'Processing cards');
+        filteredCards = [...allCards];
+        
+        // Populate category filter
+        if (allCards.length > 0) {
+            updateLoadingStatus(`Loading ${deckName}...`, 'Building category filters');
+            populateCategoryFilter();
+            
+            // Update stats
+            updateLoadingStatus(`Loading ${deckName}...`, 'Updating statistics');
+            updateStats();
+            
+            // Display the first card
+            updateLoadingStatus(`Loading ${deckName}...`, 'Preparing to display cards');
+            displayCard();
+            hideLoading();
+            elements.cardContainer.style.display = 'block';
+            
+            // Show swipe tooltip on mobile
+            showSwipeTooltip();
+        } else {
+            updateLoadingStatus('No flashcards found', 'Please check console for errors');
+            elements.cardContainer.style.display = 'none';
+        }
+    } catch (error) {
+        console.error('Error loading flashcards:', error);
+        updateLoadingStatus('Error loading flashcards', error.message);
     }
 }
+
 
 
 /**
