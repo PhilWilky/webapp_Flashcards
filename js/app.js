@@ -18,7 +18,6 @@ let touchEndX = 0;
 
 // Configuration
 const CONFIG = {
-    // Replace this URL with the actual location of your JSON file
     jsonUrl: 'flashcards.json',
     autoPlayInterval: 3000, // Time in ms for auto-play transitions
     cacheExpiry: 24 * 60 * 60 * 1000, // Cache expiry time (24 hours)
@@ -26,7 +25,8 @@ const CONFIG = {
         data: 'flashcardsData',
         timestamp: 'flashcardsTimestamp',
         viewed: 'flashcardsViewed'
-    }
+    },
+    swipeThreshold: 50 // Minimum distance required for a swipe to be registered
 };
 
 // DOM Elements
@@ -51,6 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.totalCardsElement = document.getElementById('total-cards');
     elements.categoryCountElement = document.getElementById('category-count');
     elements.viewedCountElement = document.getElementById('viewed-count');
+    elements.menuToggle = document.getElementById('menu-toggle');
+    elements.filtersContainer = document.getElementById('filters-container');
+    elements.swipeTooltip = document.getElementById('swipe-tooltip');
     
     // Add event listeners
     elements.flashcard.addEventListener('click', flipCard);
@@ -61,21 +64,89 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.categoryFilter.addEventListener('change', filterCards);
     elements.searchInput.addEventListener('input', filterCards);
 
-    elements.flashcard.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-      });
-
-      elements.flashcard.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-      });
+    // Add touch event listeners for swipe functionality
+    elements.flashcard.addEventListener('touchstart', handleTouchStart, false);
+    elements.flashcard.addEventListener('touchend', handleTouchEnd, false);
     
+    // Add menu toggle event listener
+    elements.menuToggle.addEventListener('click', toggleFilters);
+    
+    // Add event listener for swipe tooltip button
+    if (elements.swipeTooltip) {
+        const gotItBtn = document.getElementById('got-it-btn');
+        if (gotItBtn) {
+            gotItBtn.addEventListener('click', () => {
+                elements.swipeTooltip.style.display = 'none';
+                localStorage.setItem('swipeTooltipSeen', 'true');
+            });
+        }
+    }
+
     // Load previously viewed cards from local storage
     loadViewedCards();
     
     // Load the flashcards data
     loadFlashcards();
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!elements.filtersContainer.contains(event.target) && 
+            !elements.menuToggle.contains(event.target) &&
+            elements.filtersContainer.classList.contains('active')) {
+            elements.filtersContainer.classList.remove('active');
+        }
+    });
 });
+
+/**
+ * Handle touch start event
+ * @param {TouchEvent} event - The touch event
+ */
+function handleTouchStart(event) {
+    touchStartX = event.changedTouches[0].screenX;
+}
+
+/**
+ * Handle touch end event
+ * @param {TouchEvent} event - The touch event
+ */
+function handleTouchEnd(event) {
+    touchEndX = event.changedTouches[0].screenX;
+    handleSwipe();
+}
+
+/**
+ * Process the swipe gesture
+ */
+function handleSwipe() {
+    const swipeDistance = touchEndX - touchStartX;
+    const swipeThreshold = CONFIG.swipeThreshold;
+    
+    if (swipeDistance < -swipeThreshold) {
+        // Swiped left - go to next card
+        nextCard();
+    } else if (swipeDistance > swipeThreshold) {
+        // Swiped right - go to previous card
+        previousCard();
+    }
+}
+
+/**
+ * Toggle the filters menu visibility
+ */
+function toggleFilters() {
+    elements.filtersContainer.classList.toggle('active');
+}
+
+/**
+ * Show the swipe tooltip on mobile devices if not seen before
+ */
+function showSwipeTooltip() {
+    // Check if user has seen the tooltip before
+    if (window.innerWidth <= 600 && !localStorage.getItem('swipeTooltipSeen') && elements.swipeTooltip) {
+        elements.swipeTooltip.style.display = 'block';
+    }
+}
 
 /**
  * Load viewed cards from local storage
@@ -83,8 +154,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadViewedCards() {
     const viewedCardsData = localStorage.getItem(CONFIG.localStorageKeys.viewed);
     if (viewedCardsData) {
-        const viewedCardsArray = JSON.parse(viewedCardsData);
-        viewedCards = new Set(viewedCardsArray);
+        try {
+            const viewedCardsArray = JSON.parse(viewedCardsData);
+            viewedCards = new Set(viewedCardsArray);
+        } catch (error) {
+            console.error('Error loading viewed cards:', error);
+            viewedCards = new Set();
+        }
     }
 }
 
@@ -109,9 +185,15 @@ async function loadFlashcards() {
         const cachedTimestamp = localStorage.getItem(CONFIG.localStorageKeys.timestamp);
         
         // Use cache if available and not expired
-        if (cachedData && cachedTimestamp && (Date.now() - cachedTimestamp < CONFIG.cacheExpiry)) {
+        if (cachedData && cachedTimestamp && (Date.now() - Number(cachedTimestamp) < CONFIG.cacheExpiry)) {
             console.log('Using cached flashcards data');
-            allCards = JSON.parse(cachedData);
+            try {
+                allCards = JSON.parse(cachedData);
+            } catch (error) {
+                console.error('Error parsing cached data:', error);
+                // If cache is corrupted, fetch fresh data
+                allCards = await fetchFlashcardsData();
+            }
         } else {
             // Fetch fresh data
             console.log('Fetching fresh flashcards data');
@@ -136,12 +218,14 @@ async function loadFlashcards() {
             displayCard();
             elements.loadingIndicator.style.display = 'none';
             elements.cardContainer.style.display = 'block';
+            // Show swipe tooltip on mobile
+            showSwipeTooltip();
         } else {
-            elements.loadingIndicator.textContent = 'No flashcards found.';
+            elements.loadingIndicator.textContent = 'No flashcards found. Please check the JSON file path.';
         }
     } catch (error) {
         console.error('Error loading flashcards:', error);
-        elements.loadingIndicator.textContent = 'Error loading flashcards. Please try again later.';
+        elements.loadingIndicator.textContent = 'Error loading flashcards. Please check the console for details.';
     }
 }
 
@@ -151,13 +235,18 @@ async function loadFlashcards() {
  */
 async function fetchFlashcardsData(retries = 3) {
     try {
+        // Log the URL being fetched to help with debugging
+        console.log('Fetching data from:', CONFIG.jsonUrl);
+        
         const response = await fetch(CONFIG.jsonUrl);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
-        return await response.json();
+        const data = await response.json();
+        console.log('Data fetched successfully:', data.length, 'cards');
+        return data;
     } catch (error) {
         console.error(`Fetch error: ${error.message}`);
         
@@ -168,7 +257,10 @@ async function fetchFlashcardsData(retries = 3) {
             return fetchFlashcardsData(retries - 1);
         }
         
-        throw error;
+        // If all retries fail, return embedded data if available
+        console.log('All fetch attempts failed. Using embedded data if available.');
+        // You could include a small subset of cards here as fallback
+        return [];
     }
 }
 
@@ -367,60 +459,3 @@ window.addEventListener('offline', () => {
         document.body.prepend(offlineNotice);
     }
 });
-
-// In your existing DOMContentLoaded event:
-elements.menuToggle = document.getElementById('menu-toggle');
-elements.filtersContainer = document.getElementById('filters-container');
-
-// Add event listener for menu toggle
-elements.menuToggle.addEventListener('click', function() {
-  elements.filtersContainer.classList.toggle('active');
-});
-
-// Optional: Close menu when clicking outside
-document.addEventListener('click', function(event) {
-  if (!elements.filtersContainer.contains(event.target) && 
-      !elements.menuToggle.contains(event.target) &&
-      elements.filtersContainer.classList.contains('active')) {
-    elements.filtersContainer.classList.remove('active');
-  }
-});
-
-function handleSwipe() {
-    const swipeThreshold = 50;
-    
-    if (touchEndX < touchStartX - swipeThreshold) {
-      // Swiped left - go to next card
-      nextCard();
-    }
-    
-    if (touchEndX > touchStartX + swipeThreshold) {
-      // Swiped right - go to previous card
-      previousCard();
-    }
-  }
-
-  // After your existing DOMContentLoaded code
-function showSwipeTooltip() {
-    // Check if user has seen the tooltip before
-    if (!localStorage.getItem('swipeTooltipSeen')) {
-      const tooltip = document.getElementById('swipe-tooltip');
-      tooltip.style.display = 'block';
-      
-      // Add event listener to hide tooltip when button is clicked
-      document.getElementById('got-it-btn').addEventListener('click', () => {
-        tooltip.style.display = 'none';
-        localStorage.setItem('swipeTooltipSeen', 'true');
-      });
-    }
-  }
-  
-  // Call this after cards are loaded
-  function displayCard() {
-    // Your existing displayCard code
-    
-    // Show tooltip on mobile devices
-    if (window.innerWidth <= 600) {
-      showSwipeTooltip();
-    }
-  }
