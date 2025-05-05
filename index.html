@@ -23,6 +23,13 @@
             <i class="fa-solid fa-bars"></i>
           </div>
         
+          <div id="swipe-tooltip" class="tooltip">
+            <div class="tooltip-content">
+              <p>Swipe left or right to navigate cards</p>
+              <button id="got-it-btn" class="tooltip-btn">Got it!</button>
+            </div>
+          </div>
+
           <div class="filters" id="filters-container">
             <div>
                 <span class="filter-label">Category:</span>
@@ -42,16 +49,18 @@
         <div id="loading-indicator" class="loading">Loading flashcards...</div>
         
         <div class="card-container" style="display: none;">
-            <div class="card" id="flashcard">
-                <div class="card-face card-front">
-                    <div class="question" id="question">Loading question...</div>
-                    <div class="hint">Click to reveal answer</div>
+            <div class="swipe-indicator left-indicator">&lsaquo;</div>
+                <div class="card" id="flashcard">
+                    <div class="card-face card-front">
+                        <div class="question" id="question">Loading question...</div>
+                        <div class="hint">Click to reveal answer</div>
+                    </div>
+                    <div class="card-face card-back">
+                        <div class="answer" id="answer">Loading answer...</div>
+                        <div class="hint">Click to see question</div>
+                    </div>
                 </div>
-                <div class="card-face card-back">
-                    <div class="answer" id="answer">Loading answer...</div>
-                    <div class="hint">Click to see question</div>
-                </div>
-            </div>
+            <div class="swipe-indicator right-indicator">&rsaquo;</div>
         </div>
         
         <div class="controls">

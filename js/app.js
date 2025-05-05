@@ -399,3 +399,28 @@ function handleSwipe() {
       previousCard();
     }
   }
+
+  // After your existing DOMContentLoaded code
+function showSwipeTooltip() {
+    // Check if user has seen the tooltip before
+    if (!localStorage.getItem('swipeTooltipSeen')) {
+      const tooltip = document.getElementById('swipe-tooltip');
+      tooltip.style.display = 'block';
+      
+      // Add event listener to hide tooltip when button is clicked
+      document.getElementById('got-it-btn').addEventListener('click', () => {
+        tooltip.style.display = 'none';
+        localStorage.setItem('swipeTooltipSeen', 'true');
+      });
+    }
+  }
+  
+  // Call this after cards are loaded
+  function displayCard() {
+    // Your existing displayCard code
+    
+    // Show tooltip on mobile devices
+    if (window.innerWidth <= 600) {
+      showSwipeTooltip();
+    }
+  }
