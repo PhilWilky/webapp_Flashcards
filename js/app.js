@@ -401,25 +401,56 @@ async function fetchFlashcardsData(retries = 3) {
         console.log('Fetching data from:', jsonUrl);
         updateLoadingStatus('Fetching data...', `From ${jsonUrl}`);
         
-        const response = await fetch(jsonUrl);
+        // Add timeout to prevent hanging forever
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout for mobile
         
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        try {
+            const response = await fetch(jsonUrl, { 
+                signal: controller.signal,
+                // Add cache busting for mobile
+                cache: 'no-store'
+            });
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            // Use text() first to check for valid JSON
+            const text = await response.text();
+            
+            try {
+                // Then parse the text to JSON
+                const data = JSON.parse(text);
+                updateLoadingStatus('Fetching data...', `Loaded ${data.length} cards successfully`);
+                console.log('Data fetched successfully:', data.length, 'cards');
+                return data;
+            } catch (parseError) {
+                console.error('JSON parse error:', parseError);
+                console.error('Received text:', text.substring(0, 100) + '...');
+                updateLoadingStatus('Parse error', 'Invalid JSON format');
+                throw new Error('Failed to parse JSON: ' + parseError.message);
+            }
+        } catch (fetchError) {
+            clearTimeout(timeoutId);
+            throw fetchError;
         }
-        
-        updateLoadingStatus('Fetching data...', 'Parsing JSON response');
-        const data = await response.json();
-        updateLoadingStatus('Fetching data...', `Loaded ${data.length} cards successfully`);
-        console.log('Data fetched successfully:', data.length, 'cards');
-        return data;
     } catch (error) {
-        console.error(`Fetch error: ${error.message}`);
-        updateLoadingStatus('Fetch error', `${error.message}`);
+        // Handle abort errors gracefully
+        if (error.name === 'AbortError') {
+            console.error('Fetch request timed out');
+            updateLoadingStatus('Fetch timed out', 'Request took too long');
+        } else {
+            console.error(`Fetch error: ${error.message}`);
+            updateLoadingStatus('Fetch error', `${error.message}`);
+        }
         
         if (retries > 0) {
             updateLoadingStatus('Fetch error', `Retrying... (${retries} attempts left)`);
             console.log(`Retrying fetch... (${retries} attempts left)`);
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            // Increase the delay between retries for mobile
+            await new Promise(resolve => setTimeout(resolve, 2000));
             return fetchFlashcardsData(retries - 1);
         }
         
@@ -429,6 +460,7 @@ async function fetchFlashcardsData(retries = 3) {
         return [];
     }
 }
+
 
 /**
  * Populate category dropdown with unique categories
