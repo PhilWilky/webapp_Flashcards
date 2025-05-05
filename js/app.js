@@ -233,7 +233,31 @@ function changeDeck(deckId) {
  */
 function getJsonUrl() {
     const selectedDeck = CONFIG.decks.find(deck => deck.id === CONFIG.currentDeckId);
-    return selectedDeck ? selectedDeck.file : CONFIG.decks[0].file;
+    let filePath = selectedDeck ? selectedDeck.file : CONFIG.decks[0].file;
+    
+    // Check if we're running on GitHub Pages
+    const isGitHubPages = window.location.hostname.includes('github.io');
+    
+    if (isGitHubPages) {
+        // Get the repository name from the pathname
+        const pathParts = window.location.pathname.split('/');
+        const repoName = pathParts[1]; // This would be 'webapp_Flashcards' in your case
+        
+        // If we're at the root of the repo already, don't add the repo name
+        if (pathParts.length <= 2 || pathParts[2] === '') {
+            // We're at the root of the repo - just use the filename
+            return filePath;
+        } else {
+            // We're in a subdirectory - adjust path accordingly
+            // Count how many directories deep we are and add ../ for each
+            const dirCount = pathParts.filter(part => part && part !== repoName).length;
+            const relativePath = '../'.repeat(dirCount);
+            return relativePath + filePath;
+        }
+    }
+    
+    // For local development or other hosting
+    return filePath;
 }
 
 /**
@@ -398,18 +422,21 @@ async function loadFlashcards() {
 async function fetchFlashcardsData(retries = 3) {
     try {
         const jsonUrl = getJsonUrl();
-        console.log('Fetching data from:', jsonUrl);
+        console.log('Environment:', window.location.hostname);
+        console.log('Full URL:', window.location.href);
+        console.log('Pathname:', window.location.pathname);
+        console.log('Fetching data from URL:', jsonUrl);
         updateLoadingStatus('Fetching data...', `From ${jsonUrl}`);
         
         // Add timeout to prevent hanging forever
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout for mobile
+        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
         
         try {
+            // Try with a direct fetch first
             const response = await fetch(jsonUrl, { 
                 signal: controller.signal,
-                // Add cache busting for mobile
-                cache: 'no-store'
+                cache: 'no-store' // Add cache busting
             });
             clearTimeout(timeoutId);
             
@@ -428,13 +455,40 @@ async function fetchFlashcardsData(retries = 3) {
                 return data;
             } catch (parseError) {
                 console.error('JSON parse error:', parseError);
-                console.error('Received text:', text.substring(0, 100) + '...');
+                console.error('Received text (first 100 chars):', text.substring(0, 100) + '...');
                 updateLoadingStatus('Parse error', 'Invalid JSON format');
                 throw new Error('Failed to parse JSON: ' + parseError.message);
             }
         } catch (fetchError) {
             clearTimeout(timeoutId);
-            throw fetchError;
+            
+            // If fetch failed, try with a full URL including the repo name
+            if (window.location.hostname.includes('github.io')) {
+                console.log('Initial fetch failed, trying alternative GitHub Pages URL');
+                
+                // Construct a full GitHub Pages URL as fallback
+                const repoName = window.location.pathname.split('/')[1];
+                const fullGitHubURL = `/${repoName}/${jsonUrl}`;
+                console.log('Trying alternative URL:', fullGitHubURL);
+                
+                try {
+                    const altResponse = await fetch(fullGitHubURL, { cache: 'no-store' });
+                    
+                    if (!altResponse.ok) {
+                        throw new Error(`HTTP error! status: ${altResponse.status}`);
+                    }
+                    
+                    const altText = await altResponse.text();
+                    const altData = JSON.parse(altText);
+                    console.log('Alternative fetch successful:', altData.length, 'cards');
+                    return altData;
+                } catch (altError) {
+                    console.error('Alternative fetch also failed:', altError);
+                    throw fetchError; // Throw the original error for retry logic
+                }
+            } else {
+                throw fetchError;
+            }
         }
     } catch (error) {
         // Handle abort errors gracefully
@@ -449,7 +503,7 @@ async function fetchFlashcardsData(retries = 3) {
         if (retries > 0) {
             updateLoadingStatus('Fetch error', `Retrying... (${retries} attempts left)`);
             console.log(`Retrying fetch... (${retries} attempts left)`);
-            // Increase the delay between retries for mobile
+            // Delay between retries
             await new Promise(resolve => setTimeout(resolve, 2000));
             return fetchFlashcardsData(retries - 1);
         }
