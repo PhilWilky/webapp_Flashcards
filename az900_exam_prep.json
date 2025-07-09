@@ -1,0 +1,212 @@
+[
+  {
+    "id": 1,
+    "category": "Cloud Concepts",
+    "question": "What is elasticity in cloud computing?",
+    "answer": "The ability to quickly expand or decrease compute resources based on demand."
+  },
+  {
+    "id": 2,
+    "category": "Cloud Concepts",
+    "question": "What is vertical scaling?",
+    "answer": "Adding more resources (like CPU or RAM) to a single node or server to increase its capacity, also known as 'scaling up'."
+  },
+  {
+    "id": 3,
+    "category": "Cloud Concepts",
+    "question": "What is horizontal scaling?",
+    "answer": "Adding more nodes or servers to a system to distribute the load, also known as 'scaling out'."
+  },
+  {
+    "id": 4,
+    "category": "Cloud Concepts",
+    "question": "What is agility in cloud computing?",
+    "answer": "The ability to rapidly develop, test, and launch software applications that drive business growth."
+  },
+  {
+    "id": 5,
+    "category": "Cloud Concepts",
+    "question": "What is the difference between IaaS, PaaS, and SaaS?",
+    "answer": "IaaS provides virtualized computing resources, PaaS provides a platform for developing applications without managing infrastructure, and SaaS delivers software applications over the internet on a subscription basis."
+  },
+  {
+    "id": 6,
+    "category": "Azure Architecture",
+    "question": "What is an Azure region?",
+    "answer": "A set of datacenters deployed within a latency-defined perimeter and connected through a dedicated regional low-latency network."
+  },
+  {
+    "id": 7,
+    "category": "Azure Architecture",
+    "question": "What is an Azure availability zone?",
+    "answer": "Physically separate locations within an Azure region equipped with independent power, cooling, and networking."
+  },
+  {
+    "id": 8,
+    "category": "Azure Architecture",
+    "question": "What is a resource group in Azure?",
+    "answer": "A container that holds related resources for an Azure solution, grouping resources that share the same lifecycle, permissions, and policies."
+  },
+  {
+    "id": 9,
+    "category": "Azure Architecture",
+    "question": "What is Azure Resource Manager (ARM)?",
+    "answer": "The deployment and management service for Azure that provides a management layer enabling you to create, update, and delete resources."
+  },
+  {
+    "id": 10,
+    "category": "Azure Architecture",
+    "question": "What is an Azure subscription?",
+    "answer": "A logical container used to provision resources in Azure that is linked to an Azure account."
+  },
+  {
+    "id": 11,
+    "category": "Azure Architecture",
+    "question": "What is an Azure resource?",
+    "answer": "A manageable item that is available through Azure, such as virtual machines, storage accounts, web apps, databases, and virtual networks."
+  },
+  {
+    "id": 12,
+    "category": "Azure Architecture",
+    "question": "What is the difference between Azure availability sets and availability zones?",
+    "answer": "Availability sets protect against failures within a datacenter, while availability zones protect against entire datacenter failures by providing physically separate locations within a region."
+  },
+  {
+    "id": 13,
+    "category": "Azure Architecture",
+    "question": "What is an ARM template?",
+    "answer": "A JavaScript Object Notation (JSON) file that defines the infrastructure and configuration for your project, enabling infrastructure as code for Azure resources."
+  },
+  {
+    "id": 14,
+    "category": "Azure Services",
+    "question": "What is Azure Blob Storage?",
+    "answer": "Azure's object storage solution optimized for storing massive amounts of unstructured data, such as text or binary data."
+  },
+  {
+    "id": 15,
+    "category": "Azure Services",
+    "question": "What is Azure SQL Database?",
+    "answer": "A fully managed relational database with auto-scale, integral intelligence, and robust security."
+  },
+  {
+    "id": 16,
+    "category": "Azure Services",
+    "question": "What is Azure Functions?",
+    "answer": "A serverless compute service that enables you to run code on-demand without having to explicitly provision or manage infrastructure."
+  },
+  {
+    "id": 17,
+    "category": "Azure Services",
+    "question": "What is Azure Virtual Network?",
+    "answer": "The fundamental building block for your private network in Azure that enables Azure resources to securely communicate with each other, the internet, and on-premises networks."
+  },
+  {
+    "id": 18,
+    "category": "Azure Services",
+    "question": "What is Azure Container Instances?",
+    "answer": "A service that offers the fastest and simplest way to run a container in Azure without having to manage any virtual machines or adopt a higher-level service."
+  },
+  {
+    "id": 19,
+    "category": "Azure Services",
+    "question": "What is Azure Kubernetes Service (AKS)?",
+    "answer": "A managed container orchestration service that simplifies the deployment, management, and operations of Kubernetes."
+  },
+  {
+    "id": 20,
+    "category": "Azure Services",
+    "question": "What is Azure Files?",
+    "answer": "A fully managed file share service in the cloud that is accessible via the industry standard Server Message Block (SMB) protocol."
+  },
+  {
+    "id": 21,
+    "category": "Azure Management",
+    "question": "What is Azure Advisor?",
+    "answer": "A free service that provides recommendations to help improve the cost, performance, reliability, and security of your Azure resources."
+  },
+  {
+    "id": 22,
+    "category": "Azure Management",
+    "question": "What is Azure Policy?",
+    "answer": "A service in Azure that creates, assigns, and manages policies to enforce different rules and effects over your resources to ensure they comply with corporate standards and service level agreements."
+  },
+  {
+    "id": 23,
+    "category": "Azure Management",
+    "question": "What is Azure Cost Management?",
+    "answer": "A suite of tools that help track and manage your Azure spending, set budgets, and optimize resource use."
+  },
+  {
+    "id": 24,
+    "category": "Azure Security",
+    "question": "What is Microsoft Entra ID (formerly Azure AD)?",
+    "answer": "The new name for Azure Active Directory, Microsoft's cloud identity service that provides single sign-on, multifactor authentication, and conditional access to guard against cybersecurity attacks."
+  },
+  {
+    "id": 25,
+    "category": "Azure Security",
+    "question": "What are conditional access policies in Microsoft Entra ID?",
+    "answer": "Rules that allow or deny access to resources based on identity signals such as who the user is, where they are, and what device they are using."
+  },
+  {
+    "id": 26,
+    "category": "Azure Architecture",
+    "question": "What is the difference between availability zones and region pairs?",
+    "answer": "Availability zones are physically separate datacenters within a single Azure region with independent power, cooling, and networking. Region pairs are two Azure regions within the same geography, paired together for regional resiliency and disaster recovery."
+  },
+  {
+    "id": 27,
+    "category": "Azure Architecture",
+    "question": "What are the two components created within an Azure subscription?",
+    "answer": "Resource groups and resources. Resources can only be associated with a single subscription, while subscriptions may be grouped into management groups."
+  },
+  {
+    "id": 28,
+    "category": "Azure Services",
+    "question": "What is a VPN gateway used for?",
+    "answer": "Connecting an on-premises datacenter to an Azure virtual network through a Site-to-Site (S2S) VPN connection. VPN gateways are deployed to a dedicated subnet of a virtual network."
+  },
+  {
+    "id": 29,
+    "category": "Azure Services",
+    "question": "What are service endpoints in Azure?",
+    "answer": "Service endpoints expose Azure services to a virtual network, providing secure communication between Azure resources (like SQL databases) and virtual networks."
+  },
+  {
+    "id": 30,
+    "category": "Azure Services",
+    "question": "When should you use Azure Blob storage vs Azure Files?",
+    "answer": "Use Blob storage for massive amounts of unstructured data like images, documents, backups, and serving files to browsers. Use Azure Files for shared file systems accessible via SMB/NFS protocols."
+  },
+  {
+    "id": 31,
+    "category": "Azure Services",
+    "question": "What protocols does Azure Files support?",
+    "answer": "Server Message Block (SMB) and Network File System (NFS) protocols for fully managed file shares in the cloud."
+  },
+  {
+    "id": 32,
+    "category": "Azure Management",
+    "question": "What are the key features of Azure Cost Management + Billing?",
+    "answer": "Create and manage budgets, generate historical reports and forecast future usage, track spending patterns, and set up cost alerts."
+  },
+  {
+    "id": 33,
+    "category": "Azure Management",
+    "question": "What is the difference between Azure Policy and Azure Advisor?",
+    "answer": "Azure Policy enforces compliance rules and prevents non-compliant resource configurations. Azure Advisor provides recommendations to improve cost, performance, reliability, and security of existing resources."
+  },
+  {
+    "id": 34,
+    "category": "Azure Management",
+    "question": "What is Microsoft Purview Data Policy used for?",
+    "answer": "Governing access to data sources and datasets. Data Policy manages who can access what data, while other Purview features handle data discovery (Data Catalog) and sharing (Data Sharing)."
+  },
+  {
+    "id": 35,
+    "category": "Azure Services",
+    "question": "What is Azure Virtual Desktop used for?",
+    "answer": "Providing Mac and Android users (and others) with access to a Windows environment that runs Windows-based applications. It's a desktop and application virtualization service that runs in the cloud."
+  }
+]
