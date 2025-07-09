@@ -356,6 +356,12 @@ function saveViewedCards() {
  * @returns {Array} Array of flashcard objects
  */
 async function fetchFlashcardsData(retries = 3) {
+    // Get the current deck's file name - THIS IS THE KEY FIX!
+    const selectedDeck = CONFIG.decks.find(deck => deck.id === CONFIG.currentDeckId);
+    const fileName = selectedDeck ? selectedDeck.file : 'az-900.json';
+    
+    console.log('Fetching data for deck:', CONFIG.currentDeckId, 'File:', fileName);
+    
     // Define all possible paths to try in order
     const pathsToTry = [];
     
@@ -363,17 +369,17 @@ async function fetchFlashcardsData(retries = 3) {
     const isGitHubPages = window.location.hostname.includes('github.io');
     
     if (isGitHubPages) {
-        // Add all possible GitHub Pages paths to try - these are complete absolute paths
+        // Add all possible GitHub Pages paths to try - using the correct filename
         pathsToTry.push(
-            '/webapp_Flashcards/az-900.json',                   // Direct path to file
-            'https://philwilky.github.io/webapp_Flashcards/az-900.json', // Full URL
-            'https://raw.githubusercontent.com/PhilWilky/webapp_Flashcards/main/az-900.json' // Raw GitHub content
+            `/webapp_Flashcards/${fileName}`,                   // Direct path to file
+            `https://philwilky.github.io/webapp_Flashcards/${fileName}`, // Full URL
+            `https://raw.githubusercontent.com/PhilWilky/webapp_Flashcards/main/${fileName}` // Raw GitHub content
         );
     } else {
         // Local development paths to try
         pathsToTry.push(
-            'az-900.json',       // Same directory
-            '../az-900.json'     // Parent directory
+            fileName,           // Same directory
+            `../${fileName}`    // Parent directory
         );
     }
     
@@ -433,7 +439,6 @@ async function fetchFlashcardsData(retries = 3) {
     updateLoadingStatus('Fetch failed', 'All paths failed to access flashcards data');
     return [];
 }
-
 /**
  * Load flashcards function with better error handling
  */
