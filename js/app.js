@@ -17,14 +17,21 @@ let touchStartX = 0;
 let touchEndX = 0;
 
 // Configuration
+
+// Configuration
 const CONFIG = {
-    // Available decks (add more as needed)
     decks: [
         { 
             id: 'azure-az900', 
             name: 'Azure AZ-900 Fundamentals', 
             // Use absolute path for GitHub Pages
             file: 'az-900.json'
+        },
+        { 
+            id: 'azure-az900-exam-prep', 
+            name: 'AZ-900 Exam Prep (35 Cards)', 
+            // Use absolute path for GitHub Pages
+            file: 'az-900-exam-prep.json'
         }
     ],
     defaultDeck: 'azure-az900',
