@@ -207,10 +207,22 @@ function changeDeck(deckId) {
     // Save the selection to localStorage
     localStorage.setItem(CONFIG.localStorageKeys.lastSelectedDeck, deckId);
     
-    // Reset the app state
+    // Reset the app state completely
     currentCardIndex = 0;
     allCards = [];
     filteredCards = [];
+    
+    // Reset viewed cards for the new deck
+    loadViewedCards();
+    
+    // Reset stats display immediately
+    elements.totalCardsElement.textContent = '0';
+    elements.categoryCountElement.textContent = '0';
+    elements.viewedCountElement.textContent = viewedCards.size;
+    
+    // Reset category filter
+    elements.categoryFilter.innerHTML = '<option value="all">All Categories</option>';
+    elements.searchInput.value = '';
     
     // Stop auto-play if it's running
     if (isPlaying) {
