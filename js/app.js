@@ -32,7 +32,13 @@ const CONFIG = {
             name: 'AZ-900 Exam Prep (35 Cards)', 
             // Use absolute path for GitHub Pages
             file: 'az-900-exam-prep.json'
-        }
+        },
+        { 
+            id: 'azure-az900-exam-final-prep', 
+            name: 'AZ-900 Exam Final Prep (25 Cards)', 
+            // Use absolute path for GitHub Pages
+            file: 'az900_final_prep.json'
+        },
     ],
     defaultDeck: 'azure-az900',
     currentDeckId: 'azure-az900',
