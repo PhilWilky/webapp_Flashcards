@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "category": "Cloud Concepts - Key Differences",
+    "question": "What is the difference between Agility and Elasticity in cloud computing?",
+    "answer": "Agility: The ability to rapidly develop, test, and launch software applications that drive business growth - focuses on SPEED of deployment and configuration. Elasticity: The ability to quickly expand or decrease compute resources based on demand - focuses on SCALING resources automatically."
+  },
+  {
+    "id": 2,
+    "category": "Cloud Concepts - Scaling",
+    "question": "What is the difference between Vertical Scaling and Horizontal Scaling?",
+    "answer": "Vertical Scaling (Scale Up): Adding more resources (CPU/RAM) to a SINGLE existing machine. Horizontal Scaling (Scale Out): Adding MORE machines/instances to distribute the load across multiple systems."
+  },
+  {
+    "id": 3,
+    "category": "Azure Networking",
+    "question": "What is the difference between ExpressRoute and Service Endpoints?",
+    "answer": "ExpressRoute: Connects on-premises networks to Azure through a private connection. Service Endpoints: Expose Azure services (like SQL Database) to a virtual network, providing secure communication between Azure resources and VNets."
+  },
+  {
+    "id": 4,
+    "category": "Azure Storage",
+    "question": "What is the difference between Azure Queue Storage and Azure Files?",
+    "answer": "Azure Queue Storage: A service for storing large numbers of messages for asynchronous processing between application components. Azure Files: Fully managed file shares accessible via SMB/NFS protocols for shared file systems."
+  },
+  {
+    "id": 5,
+    "category": "Azure Management",
+    "question": "What is the difference between Azure Policy and Azure Blueprints?",
+    "answer": "Azure Policy: Creates, assigns, and manages policies to enforce rules and compliance on individual resources. Azure Blueprints: Orchestrates deployment of multiple resource templates, policies, and role assignments together as a package."
+  },
+  {
+    "id": 6,
+    "category": "Azure Management",
+    "question": "What is the difference between resource tags and resource groups for cost management?",
+    "answer": "Resource Tags: Metadata applied to individual resources to categorize costs by department, environment, or project WITHOUT changing resource location. Resource Groups: Logical containers that group related resources but generate separate billing only with customization."
+  },
+  {
+    "id": 7,
+    "category": "Azure Tools",
+    "question": "What is the difference between Azure Monitor and Application Insights?",
+    "answer": "Azure Monitor: Platform for collecting metrics and logs from entire Azure environment, can trigger autoscaling and alerts. Application Insights: Specifically monitors running applications, detects performance anomalies, and provides analytics for app behavior."
+  },
+  {
+    "id": 8,
+    "category": "Azure Tools",
+    "question": "What tools are accessible through Azure Cloud Shell?",
+    "answer": "Azure CLI and Azure PowerShell. Cloud Shell is browser-accessible and doesn't require local installation of tools. You can create VMs and manage resources using either tool through any web browser."
+  },
+  {
+    "id": 9,
+    "category": "Azure Security",
+    "question": "What is the difference between Microsoft Intune and Azure Policy?",
+    "answer": "Microsoft Intune: Mobile device management and mobile application management service, focuses on device compliance. Azure Policy: Enforces organizational standards and compliance on Azure resources, can prevent non-compliant resource creation."
+  },
+  {
+    "id": 10,
+    "category": "Azure Architecture",
+    "question": "What is the difference between Availability Zones and Region Pairs?",
+    "answer": "Availability Zones: Physically separate datacenters WITHIN a single Azure region with independent power/cooling/networking. Region Pairs: Two Azure regions within the same geography paired for disaster recovery across different geographic areas."
+  },
+  {
+    "id": 11,
+    "category": "Azure Services",
+    "question": "What is the difference between Azure Container Instances and Azure Virtual Machine Scale Sets?",
+    "answer": "Azure Container Instances: Fastest way to run a single container without managing VMs. Azure Virtual Machine Scale Sets: Deploy and manage a SET of IDENTICAL virtual machines that can scale automatically."
+  },
+  {
+    "id": 12,
+    "category": "Azure Portal Access",
+    "question": "How can you change the availability zone of a virtual machine?",
+    "answer": "You CANNOT change the availability zone of an existing VM through Azure portal. VMs are deployed to specific zones at creation time. To move to a different zone, you must recreate the VM."
+  },
+  {
+    "id": 13,
+    "category": "Azure Management",
+    "question": "What should you use to access Azure Cloud Shell?",
+    "answer": "A web browser. Cloud Shell is browser-accessible and doesn't require command-line tools on your local computer. It provides both Bash and PowerShell interfaces through the browser."
+  },
+  {
+    "id": 14,
+    "category": "Cloud Service Models",
+    "question": "Which cloud service models require customers to manage operating systems?",
+    "answer": "Infrastructure as a Service (IaaS) and On-premises deployments. In PaaS and SaaS, the operating system is managed by the service provider."
+  },
+  {
+    "id": 15,
+    "category": "Azure Cost Management",
+    "question": "What are the key capabilities of Azure Cost Management + Billing?",
+    "answer": "Create and manage budgets, generate historical reports, forecast future usage and expenditures, track spending patterns, set up cost alerts, and analyze cost trends using historical data."
+  },
+  {
+    "id": 16,
+    "category": "Microsoft Purview",
+    "question": "What are the four main features of Microsoft Purview governance portal?",
+    "answer": "Data Catalog (data discovery), Data Policy (governs access to data), Data Sharing (shares data within/between organizations), Data Estate Insights (accesses data estate health)."
+  },
+  {
+    "id": 17,
+    "category": "Azure Billing",
+    "question": "For which resource does Azure generate separate billing reports by default?",
+    "answer": "Subscriptions. Azure generates separate billing reports and invoices for each subscription. Resource groups can group costs but don't get separate invoices by default."
+  },
+  {
+    "id": 18,
+    "category": "Azure Tools",
+    "question": "What mobile device tools can create Azure VMs from Android?",
+    "answer": "The Azure portal (through web browser) and PowerShell in Azure Cloud Shell. Both work on Android devices through any modern web browser like Chrome, Firefox, or Safari."
+  },
+  {
+    "id": 19,
+    "category": "Private Cloud Characteristics",
+    "question": "What are the two key characteristics of private cloud deployment?",
+    "answer": "1) Hardware must be purchased for startup and maintenance, 2) The company has complete control over physical resources and security. NOT pay-only-for-what-you-use (that's public cloud)."
+  },
+  {
+    "id": 20,
+    "category": "Azure Storage Tiers",
+    "question": "Which Azure Blob storage tier has the HIGHEST storage costs and FASTEST access times?",
+    "answer": "Hot tier. It's optimized for frequently accessed data with highest storage costs but fastest access. Cool has lower storage costs but higher access costs. Archive has lowest storage costs but highest rehydration costs."
+  },
+  {
+    "id": 21,
+    "category": "Cloud Service Models",
+    "question": "What cloud service model is typically licensed through monthly/annual subscriptions?",
+    "answer": "Software as a Service (SaaS). SaaS uses subscription-based licensing. IaaS and PaaS typically use consumption-based pricing where you pay only for what you use."
+  },
+  {
+    "id": 22,
+    "category": "Azure Monitoring",
+    "question": "Where should you look for Root Cause Analysis (RCA) reports after a service outage?",
+    "answer": "Azure Service Health. After outages, Service Health provides official incident reports called RCA reports that you can share with stakeholders."
+  },
+  {
+    "id": 23,
+    "category": "Defense in Depth",
+    "question": "What is defense in depth strategy?",
+    "answer": "A security strategy that uses a SERIES of mechanisms to slow the advancement of an attack aiming to gain unauthorized access to data. It's about layered security, not single points of protection."
+  },
+  {
+    "id": 24,
+    "category": "Azure Services Classification",
+    "question": "What type of cloud service are virtual networks classified as?",
+    "answer": "Infrastructure as a Service (IaaS). Virtual networks are part of the infrastructure layer that you configure and manage, along with VMs, storage, and networking components."
+  },
+  {
+    "id": 25,
+    "category": "Azure Architecture",
+    "question": "What are the two components that are created within an Azure subscription?",
+    "answer": "Resource groups and resources. Resources can only be associated with a single subscription, while subscriptions may be grouped into management groups."
+  }
+]
